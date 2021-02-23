@@ -17,3 +17,7 @@ The whole description of the task is here: https://vk.com/doc382111579_586896120
 
 6. ./bin/main
 
+For managing figure press W, S, A, D for moving up, down, left and right.
+In order to escape - press Esc.
+
+
