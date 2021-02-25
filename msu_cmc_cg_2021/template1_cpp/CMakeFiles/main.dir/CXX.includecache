@@ -38,6 +38,16 @@ string
 glad/glad.h
 -
 
+/home/tanya/mashgraph/msu_cmc_cg_2021/template1_cpp/labyrinth.cpp
+labyrinth.h
+/home/tanya/mashgraph/msu_cmc_cg_2021/template1_cpp/labyrinth.h
+iostream
+-
+
+/home/tanya/mashgraph/msu_cmc_cg_2021/template1_cpp/labyrinth.h
+Image.h
+/home/tanya/mashgraph/msu_cmc_cg_2021/template1_cpp/Image.h
+
 /home/tanya/mashgraph/msu_cmc_cg_2021/template1_cpp/main.cpp
 common.h
 /home/tanya/mashgraph/msu_cmc_cg_2021/template1_cpp/common.h
@@ -45,6 +55,8 @@ Image.h
 /home/tanya/mashgraph/msu_cmc_cg_2021/template1_cpp/Image.h
 Player.h
 /home/tanya/mashgraph/msu_cmc_cg_2021/template1_cpp/Player.h
+labyrinth.h
+/home/tanya/mashgraph/msu_cmc_cg_2021/template1_cpp/labyrinth.h
 GLFW/glfw3.h
 -
 

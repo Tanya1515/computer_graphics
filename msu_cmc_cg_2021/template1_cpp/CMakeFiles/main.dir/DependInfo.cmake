@@ -21,6 +21,7 @@ set(CMAKE_C_TARGET_INCLUDE_PATH
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/tanya/mashgraph/msu_cmc_cg_2021/template1_cpp/Image.cpp" "/home/tanya/mashgraph/msu_cmc_cg_2021/template1_cpp/CMakeFiles/main.dir/Image.cpp.o"
   "/home/tanya/mashgraph/msu_cmc_cg_2021/template1_cpp/Player.cpp" "/home/tanya/mashgraph/msu_cmc_cg_2021/template1_cpp/CMakeFiles/main.dir/Player.cpp.o"
+  "/home/tanya/mashgraph/msu_cmc_cg_2021/template1_cpp/labyrinth.cpp" "/home/tanya/mashgraph/msu_cmc_cg_2021/template1_cpp/CMakeFiles/main.dir/labyrinth.cpp.o"
   "/home/tanya/mashgraph/msu_cmc_cg_2021/template1_cpp/main.cpp" "/home/tanya/mashgraph/msu_cmc_cg_2021/template1_cpp/CMakeFiles/main.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

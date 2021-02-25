@@ -204,6 +204,33 @@ glad.c.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/glad.c.s
 .PHONY : glad.c.s
 
+labyrinth.o: labyrinth.cpp.o
+
+.PHONY : labyrinth.o
+
+# target to build an object file
+labyrinth.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/labyrinth.cpp.o
+.PHONY : labyrinth.cpp.o
+
+labyrinth.i: labyrinth.cpp.i
+
+.PHONY : labyrinth.i
+
+# target to preprocess a source file
+labyrinth.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/labyrinth.cpp.i
+.PHONY : labyrinth.cpp.i
+
+labyrinth.s: labyrinth.cpp.s
+
+.PHONY : labyrinth.s
+
+# target to generate assembly for a file
+labyrinth.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/labyrinth.cpp.s
+.PHONY : labyrinth.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -249,6 +276,9 @@ help:
 	@echo "... glad.o"
 	@echo "... glad.i"
 	@echo "... glad.s"
+	@echo "... labyrinth.o"
+	@echo "... labyrinth.i"
+	@echo "... labyrinth.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

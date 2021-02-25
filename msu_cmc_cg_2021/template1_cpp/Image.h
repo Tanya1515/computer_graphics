@@ -3,7 +3,7 @@
 
 #include <string>
 
-constexpr int tileSize = 16;
+constexpr int tileSize = 115;
 
 struct Pixel
 {
@@ -22,14 +22,14 @@ struct Image
 
   int Save(const std::string &a_path);
 
-  int Width()    const { return width; }
-  int Height()   const { return height; }
+  int Width() const { return width; }
+  int Height() const { return height; }
   int Channels() const { return channels; }
-  size_t Size()  const { return size; }
-  Pixel* Data()        { return  data; }
+  size_t Size() const { return size; }
+  Pixel *Data() { return data; }
 
-  Pixel GetPixel(int x, int y) { return data[width * y + x];}
-  void  PutPixel(int x, int y, const Pixel &pix) { data[width* y + x] = pix; }
+  Pixel GetPixel(int x, int y) { return data[width * y + x]; }
+  void PutPixel(int x, int y, const Pixel &pix) { data[width * y + x] = pix; }
 
   ~Image();
 
@@ -41,7 +41,5 @@ private:
   Pixel *data = nullptr;
   bool self_allocated = false;
 };
-
-
 
 #endif //MAIN_IMAGE_H

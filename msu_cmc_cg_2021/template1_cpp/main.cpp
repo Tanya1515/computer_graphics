@@ -1,6 +1,7 @@
 #include "common.h"
 #include "Image.h"
 #include "Player.h"
+#include "labyrinth.h"
 
 #define GLFW_DLL
 #include <GLFW/glfw3.h>
@@ -9,40 +10,39 @@ constexpr GLsizei WINDOW_WIDTH = 1024, WINDOW_HEIGHT = 1024;
 
 struct InputState
 {
-  bool keys[1024]{}; //массив состояний кнопок - нажата/не нажата
+  bool keys[1024]{};                //массив состояний кнопок - нажата/не нажата
   GLfloat lastX = 400, lastY = 300; //исходное положение мыши
   bool firstMouse = true;
-  bool captureMouse         = true;  // Мышка захвачена нашим приложением или нет?
+  bool captureMouse = true; // Мышка захвачена нашим приложением или нет?
   bool capturedMouseJustNow = false;
 } static Input;
-
 
 GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
 
-
-void OnKeyboardPressed(GLFWwindow* window, int key, int scancode, int action, int mode)
+void OnKeyboardPressed(GLFWwindow *window, int key, int scancode, int action, int mode)
 {
-	switch (key)
-	{
-	case GLFW_KEY_ESCAPE:
-		if (action == GLFW_PRESS)
-			glfwSetWindowShouldClose(window, GL_TRUE);
-		break;
+  switch (key)
+  {
+  case GLFW_KEY_ESCAPE:
+    if (action == GLFW_PRESS)
+      glfwSetWindowShouldClose(window, GL_TRUE);
+    break;
   case GLFW_KEY_1:
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     break;
   case GLFW_KEY_2:
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     break;
-	default:
-		if (action == GLFW_PRESS)
+  default:
+    if (action == GLFW_PRESS)
       Input.keys[key] = true;
-		else if (action == GLFW_RELEASE)
+    else if (action == GLFW_RELEASE)
       Input.keys[key] = false;
-	}
+  }
 }
 
+// движение объекта и кнопки на клавиатуре
 void processPlayerMovement(Player &player)
 {
   if (Input.keys[GLFW_KEY_W])
@@ -55,7 +55,8 @@ void processPlayerMovement(Player &player)
     player.ProcessInput(MovementDir::RIGHT);
 }
 
-void OnMouseButtonClicked(GLFWwindow* window, int button, int action, int mods)
+// движения мышки, если правая кнопка - курсор пропадает, если левая - появляется
+void OnMouseButtonClicked(GLFWwindow *window, int button, int action, int mods)
 {
   if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE)
     Input.captureMouse = !Input.captureMouse;
@@ -67,10 +68,9 @@ void OnMouseButtonClicked(GLFWwindow* window, int button, int action, int mods)
   }
   else
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-
 }
 
-void OnMouseMove(GLFWwindow* window, double xpos, double ypos)
+void OnMouseMove(GLFWwindow *window, double xpos, double ypos)
 {
   if (Input.firstMouse)
   {
@@ -86,93 +86,105 @@ void OnMouseMove(GLFWwindow* window, double xpos, double ypos)
   Input.lastY = float(ypos);
 }
 
-
-void OnMouseScroll(GLFWwindow* window, double xoffset, double yoffset)
+void OnMouseScroll(GLFWwindow *window, double xoffset, double yoffset)
 {
   // ...
 }
 
-
 int initGL()
 {
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-	{
-		std::cout << "Failed to initialize OpenGL context" << std::endl;
-		return -1;
-	}
+  if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+  {
+    std::cout << "Failed to initialize OpenGL context" << std::endl;
+    return -1;
+  }
 
-	std::cout << "Vendor: " << glGetString(GL_VENDOR) << std::endl;
-	std::cout << "Renderer: " << glGetString(GL_RENDERER) << std::endl;
-	std::cout << "Version: " << glGetString(GL_VERSION) << std::endl;
-	std::cout << "GLSL: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
+  std::cout << "Vendor: " << glGetString(GL_VENDOR) << std::endl;
+  std::cout << "Renderer: " << glGetString(GL_RENDERER) << std::endl;
+  std::cout << "Version: " << glGetString(GL_VERSION) << std::endl;
+  std::cout << "GLSL: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 
-  std::cout << "Controls: "<< std::endl;
-  std::cout << "press right mouse button to capture/release mouse cursor  "<< std::endl;
-  std::cout << "W, A, S, D - movement  "<< std::endl;
+  std::cout << "Controls: " << std::endl;
+  std::cout << "press right mouse button to capture/release mouse cursor  " << std::endl;
+  std::cout << "W, A, S, D - movement  " << std::endl;
   std::cout << "press ESC to exit" << std::endl;
 
-	return 0;
+  return 0;
 }
 
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
-	if(!glfwInit())
+  //инициализация GLFW
+  if (!glfwInit())
+    return -1;
+  // настройка GLFW, 1ый аргумент - параметр, который будет меняться
+  // 2ой - значение измменяемого параметра
+  //glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+  //glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+  //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+  glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+
+  // создание объекта окна
+  GLFWwindow *window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "task1 base project", nullptr, nullptr);
+  if (window == nullptr)
+  {
+    std::cout << "Failed to create GLFW window" << std::endl;
+    glfwTerminate();
+    return -1;
+  }
+  // контекст окна
+  glfwMakeContextCurrent(window);
+
+  glfwSetKeyCallback(window, OnKeyboardPressed);
+  glfwSetCursorPosCallback(window, OnMouseMove);
+  glfwSetMouseButtonCallback(window, OnMouseButtonClicked);
+  glfwSetScrollCallback(window, OnMouseScroll);
+
+  if (initGL() != 0)
     return -1;
 
-//	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-//	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-//	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-
-  GLFWwindow*  window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "task1 base project", nullptr, nullptr);
-	if (window == nullptr)
-	{
-		std::cout << "Failed to create GLFW window" << std::endl;
-		glfwTerminate();
-		return -1;
-	}
-	
-	glfwMakeContextCurrent(window); 
-
-	glfwSetKeyCallback        (window, OnKeyboardPressed);  
-	glfwSetCursorPosCallback  (window, OnMouseMove); 
-  glfwSetMouseButtonCallback(window, OnMouseButtonClicked);
-	glfwSetScrollCallback     (window, OnMouseScroll);
-
-	if(initGL() != 0) 
-		return -1;
-	
   //Reset any OpenGL errors which could be present for some reason
-	GLenum gl_error = glGetError();
-	while (gl_error != GL_NO_ERROR)
-		gl_error = glGetError();
+  GLenum gl_error = glGetError();
+  while (gl_error != GL_NO_ERROR)
+    gl_error = glGetError();
 
-	Point starting_pos{.x = WINDOW_WIDTH / 2, .y = WINDOW_HEIGHT / 2};
-	Player player{starting_pos};
+  Point starting_pos{.x = WINDOW_WIDTH / 2, .y = WINDOW_HEIGHT / 2};
+  Player player{starting_pos};
 
-	Image img("../resources/tex.png");
-	Image screenBuffer(WINDOW_WIDTH, WINDOW_HEIGHT, 4);
+  Point_s starting_pos_s{.x = 0, .y = 0};
+  Labyrinth labyrinth{starting_pos_s};
 
-  glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);  GL_CHECK_ERRORS;
-  glClearColor(0.0f, 0.0f, 0.0f, 1.0f); GL_CHECK_ERRORS;
+  Image img("../resources/tex.png");
+  Image screenBuffer(WINDOW_WIDTH, WINDOW_HEIGHT, 4);
+
+  glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+  GL_CHECK_ERRORS;
+  glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+  GL_CHECK_ERRORS;
+
+  labyrinth.Draw(screenBuffer);
 
   //game loop
-	while (!glfwWindowShouldClose(window))
-	{
-		GLfloat currentFrame = glfwGetTime();
-		deltaTime = currentFrame - lastFrame;
-		lastFrame = currentFrame;
+  while (!glfwWindowShouldClose(window))
+  {
+    GLfloat currentFrame = glfwGetTime();
+    deltaTime = currentFrame - lastFrame;
+    lastFrame = currentFrame;
+    // проверяем события и вызыываем функции обратного вызова
     glfwPollEvents();
-
+    // команды отрисовки
     processPlayerMovement(player);
     player.Draw(screenBuffer);
 
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); GL_CHECK_ERRORS;
-    glDrawPixels (WINDOW_WIDTH, WINDOW_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, screenBuffer.Data()); GL_CHECK_ERRORS;
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    GL_CHECK_ERRORS;
+    glDrawPixels(WINDOW_WIDTH, WINDOW_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, screenBuffer.Data());
+    GL_CHECK_ERRORS;
 
-		glfwSwapBuffers(window);
-	}
+    // меняем буферы местами
+    glfwSwapBuffers(window);
+  }
 
-	glfwTerminate();
-	return 0;
+  glfwTerminate();
+  return 0;
 }
