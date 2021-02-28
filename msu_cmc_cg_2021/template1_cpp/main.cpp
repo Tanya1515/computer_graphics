@@ -151,8 +151,17 @@ int main(int argc, char **argv)
   Point starting_pos{.x = WINDOW_WIDTH / 2, .y = WINDOW_HEIGHT / 2};
   Player player{starting_pos};
 
-  Point_s starting_pos_s{.x = 0, .y = 0};
-  Labyrinth labyrinth{starting_pos_s};
+  Point_s starting_pos_s{.x = WINDOW_WIDTH / 4, .y = WINDOW_HEIGHT / 4};
+  Wall_4 floor{starting_pos_s};
+
+  Point_s starting_pos_path{.x = WINDOW_WIDTH / 4, .y = WINDOW_HEIGHT / 4 + 33};
+  Wall_1 path{starting_pos_path};
+
+  Point_s starting_pos_door{.x = WINDOW_WIDTH / 10, .y = WINDOW_HEIGHT / 10};
+  Wall_3 door{starting_pos_door};
+
+  Point_s starting_pos_door_2{.x = WINDOW_WIDTH / 20, .y = WINDOW_HEIGHT / 20};
+  Wall_2 door_2{starting_pos_door_2};
 
   Image img("../resources/tex.png");
   Image screenBuffer(WINDOW_WIDTH, WINDOW_HEIGHT, 4);
@@ -162,7 +171,10 @@ int main(int argc, char **argv)
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
   GL_CHECK_ERRORS;
 
-  labyrinth.Draw(screenBuffer);
+  floor.Draw(screenBuffer);
+  path.Draw(screenBuffer);
+  door.Draw(screenBuffer);
+  door_2.Draw(screenBuffer);
 
   //game loop
   while (!glfwWindowShouldClose(window))
