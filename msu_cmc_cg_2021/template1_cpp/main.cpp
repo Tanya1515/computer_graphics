@@ -86,6 +86,202 @@ void OnMouseMove(GLFWwindow *window, double xpos, double ypos)
   Input.lastY = float(ypos);
 }
 
+Point Lab_A(char letter, FILE *fp, Image &screenBuffer)
+{
+  int i = 0;
+  int j = 0;
+  Point starting_pos_player{.x = i * 54, .y = j * 32};
+  Point_s starting_pos_s{.x = i * 54, .y = j * 32};
+  for (int i = 0; i < 19; i++)
+  {
+    for (int j = 0; j < 32; j++)
+    {
+      if (letter == '.')
+      {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        Path_1 path{starting_pos_s};
+        path.Draw(screenBuffer);
+      }
+      if (letter == '#')
+      {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        Wall_1 wall{starting_pos_s};
+        wall.Draw(screenBuffer);
+      }
+      if (letter == 'x')
+      {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        Door_1 door{starting_pos_s};
+        door.Draw(screenBuffer);
+      }
+      if (letter == '*')
+      {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        Bush_1 bush{starting_pos_s};
+        bush.Draw(screenBuffer);
+      }
+      if (letter == ' ')
+      {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        nothing no{starting_pos_s};
+        no.Draw(screenBuffer);
+      }
+      if (letter == '@')
+      {
+        starting_pos_player = {.x = i * 54, .y = j * 32};
+      }
+      letter = fgetc(fp);
+    }
+  }
+  return starting_pos_player;
+}
+
+Point Lab_B(char letter, FILE *fp, Image &screenBuffer)
+{
+  int i = 0;
+  int j = 0;
+  Point starting_pos_player{.x = i * 54, .y = j * 32};
+  Point_s starting_pos_s{.x = i * 54, .y = j * 32};
+  for (int i = 0; i < 19; i++)
+    for (int j = 0; j < 32; j++)
+    {
+      if (letter == '.')
+      {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        Path_2 path{starting_pos_s};
+        path.Draw(screenBuffer);
+      }
+      if (letter == '#')
+      {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        Wall_2 wall{starting_pos_s};
+        wall.Draw(screenBuffer);
+      }
+      if (letter == 'x')
+      {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        Door_2 door{starting_pos_s};
+        door.Draw(screenBuffer);
+      }
+      if (letter == '*')
+      {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        Bush_2 bush{starting_pos_s};
+        bush.Draw(screenBuffer);
+      }
+      if (letter == ' ')
+      {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        nothing no{starting_pos_s};
+        no.Draw(screenBuffer);
+      }
+      if (letter == '@')
+      {
+        starting_pos_player = {.x = i * 54, .y = j * 32};
+      }
+      letter = fgetc(fp);
+    }
+  return starting_pos_player;
+}
+
+Point Lab_C(char letter, FILE *fp, Image &screenBuffer)
+{
+  int i = 0;
+  int j = 0;
+  Point starting_pos_player{.x = i * 54, .y = j * 32};
+  Point_s starting_pos_s{.x = i * 54, .y = j * 32};
+  for (int i = 0; i < 19; i++)
+  {
+    for (int j = 0; j < 32; j++)
+    {
+      if (letter == '.')
+      {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        Path_3 path{starting_pos_s};
+        path.Draw(screenBuffer);
+      }
+      if (letter == '#')
+      {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        Wall_3 wall{starting_pos_s};
+        wall.Draw(screenBuffer);
+      }
+      if (letter == '*')
+      {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        Bush_3 bush{starting_pos_s};
+        bush.Draw(screenBuffer);
+      }
+      if (letter == 'x')
+      {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        Door_3 door{starting_pos_s};
+        door.Draw(screenBuffer);
+      }
+      if (letter == ' ')
+      {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        nothing no{starting_pos_s};
+        no.Draw(screenBuffer);
+      }
+      if (letter == '@')
+      {
+        starting_pos_player = {.x = i * 54, .y = j * 32};
+      }
+      letter = fgetc(fp);
+    }
+  }
+  return starting_pos_player;
+}
+
+Point Lab_D(char letter, FILE *fp, Image &screenBuffer)
+{
+  int i = 0;
+  int j = 0;
+  Point starting_pos_player{.x = i * 54, .y = j * 32};
+  Point_s starting_pos_s{.x = i * 54, .y = j * 32};
+  for (int i = 0; i < 19; i++)
+    for (int j = 0; j < 32; j++)
+    {
+      if (letter == '.')
+      {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        Path_4 path{starting_pos_s};
+        path.Draw(screenBuffer);
+      }
+      if (letter == '#')
+      {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        Wall_4 wall{starting_pos_s};
+        wall.Draw(screenBuffer);
+      }
+      if (letter == 'x')
+      {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        Door_4 door{starting_pos_s};
+        door.Draw(screenBuffer);
+      }
+      if (letter == '*')
+      {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        Bush_4 bush{starting_pos_s};
+        bush.Draw(screenBuffer);
+      }
+      if (letter == ' ')
+      {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        nothing no{starting_pos_s};
+        no.Draw(screenBuffer);
+      }
+      if (letter == '@')
+      {
+        starting_pos_player = {.x = i * 54, .y = j * 32};
+      }
+      letter = fgetc(fp);
+    }
+  return starting_pos_player;
+}
+
 void OnMouseScroll(GLFWwindow *window, double xoffset, double yoffset)
 {
   // ...
@@ -114,6 +310,10 @@ int initGL()
 
 int main(int argc, char **argv)
 {
+  FILE *fp;
+  fp = fopen(argv[1], "r+");
+  char check = fgetc(fp);
+  char letter = fgetc(fp);
   //инициализация GLFW
   if (!glfwInit())
     return -1;
@@ -148,33 +348,22 @@ int main(int argc, char **argv)
   while (gl_error != GL_NO_ERROR)
     gl_error = glGetError();
 
-  Point starting_pos{.x = WINDOW_WIDTH / 2, .y = WINDOW_HEIGHT / 2};
-  Player player{starting_pos};
-
-  Point_s starting_pos_s{.x = WINDOW_WIDTH / 4, .y = WINDOW_HEIGHT / 4};
-  Wall_4 floor{starting_pos_s};
-
-  Point_s starting_pos_path{.x = WINDOW_WIDTH / 4, .y = WINDOW_HEIGHT / 4 + 33};
-  Wall_1 path{starting_pos_path};
-
-  Point_s starting_pos_door{.x = WINDOW_WIDTH / 10, .y = WINDOW_HEIGHT / 10};
-  Wall_3 door{starting_pos_door};
-
-  Point_s starting_pos_door_2{.x = WINDOW_WIDTH / 20, .y = WINDOW_HEIGHT / 20};
-  Wall_2 door_2{starting_pos_door_2};
-
   Image img("../resources/tex.png");
   Image screenBuffer(WINDOW_WIDTH, WINDOW_HEIGHT, 4);
-
+  Point starting_pos_player;
+  if (check == 'A')
+    starting_pos_player = Lab_A(letter, fp, screenBuffer);
+  if (check == 'B')
+    starting_pos_player = Lab_B(letter, fp, screenBuffer);
+  if (check == 'C')
+    starting_pos_player = Lab_C(letter, fp, screenBuffer);
+  if (check == 'D')
+    starting_pos_player = Lab_D(letter, fp, screenBuffer);
+  Player player{starting_pos_player};
   glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
   GL_CHECK_ERRORS;
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
   GL_CHECK_ERRORS;
-
-  floor.Draw(screenBuffer);
-  path.Draw(screenBuffer);
-  door.Draw(screenBuffer);
-  door_2.Draw(screenBuffer);
 
   //game loop
   while (!glfwWindowShouldClose(window))
@@ -196,7 +385,7 @@ int main(int argc, char **argv)
     // меняем буферы местами
     glfwSwapBuffers(window);
   }
-
+  fclose(fp);
   glfwTerminate();
   return 0;
 }

@@ -1,5 +1,15 @@
 #include "Player.h"
 
+static Pixel blend(Pixel oldPixel, Pixel newPixel)
+{
+  newPixel.r = newPixel.a / 255.0 * (newPixel.r - oldPixel.r) + oldPixel.r;
+  newPixel.g = newPixel.a / 255.0 * (newPixel.g - oldPixel.g) + oldPixel.g;
+  newPixel.b = newPixel.a / 255.0 * (newPixel.b - oldPixel.b) + oldPixel.b;
+  newPixel.a = 255;
+
+  return newPixel;
+}
+
 bool Player::Moved() const
 {
   if (coords.x == old_coords.x && coords.y == old_coords.y)
@@ -53,7 +63,7 @@ void Player::Draw(Image &screen)
   {
     for (int x = coords.x; x <= coords.x + tileSize; ++x)
     {
-      Pixel pix = floor.GetPixel(x - coords.x, tileSize - y + coords.y);
+      Pixel pix = blend(backgroundColor, floor.GetPixel(x - coords.x, tileSize - y + coords.y));
       screen.PutPixel(x, y, pix);
     }
   }
