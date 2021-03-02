@@ -92,9 +92,9 @@ Point Lab_A(char letter, FILE *fp, Image &screenBuffer)
   int j = 0;
   Point starting_pos_player{.x = i * 54, .y = j * 32};
   Point_s starting_pos_s{.x = i * 54, .y = j * 32};
-  for (int i = 0; i < 19; i++)
+  for (int j = 0; j < 32; j++)
   {
-    for (int j = 0; j < 32; j++)
+    for (int i = 0; i < 19; i++)
     {
       if (letter == '.')
       {
@@ -128,10 +128,14 @@ Point Lab_A(char letter, FILE *fp, Image &screenBuffer)
       }
       if (letter == '@')
       {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        Path_1 path{starting_pos_s};
+        path.Draw(screenBuffer);
         starting_pos_player = {.x = i * 54, .y = j * 32};
       }
       letter = fgetc(fp);
     }
+    letter = fgetc(fp);
   }
   return starting_pos_player;
 }
@@ -142,8 +146,9 @@ Point Lab_B(char letter, FILE *fp, Image &screenBuffer)
   int j = 0;
   Point starting_pos_player{.x = i * 54, .y = j * 32};
   Point_s starting_pos_s{.x = i * 54, .y = j * 32};
-  for (int i = 0; i < 19; i++)
-    for (int j = 0; j < 32; j++)
+  for (int j = 0; j < 32; j++)
+  {
+    for (int i = 0; i < 19; i++)
     {
       if (letter == '.')
       {
@@ -159,6 +164,7 @@ Point Lab_B(char letter, FILE *fp, Image &screenBuffer)
       }
       if (letter == 'x')
       {
+        std::cout << "press ESC to exit" << std::endl;
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Door_2 door{starting_pos_s};
         door.Draw(screenBuffer);
@@ -177,10 +183,15 @@ Point Lab_B(char letter, FILE *fp, Image &screenBuffer)
       }
       if (letter == '@')
       {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        Path_2 path{starting_pos_s};
+        path.Draw(screenBuffer);
         starting_pos_player = {.x = i * 54, .y = j * 32};
       }
       letter = fgetc(fp);
     }
+    letter = fgetc(fp);
+  }
   return starting_pos_player;
 }
 
@@ -190,9 +201,9 @@ Point Lab_C(char letter, FILE *fp, Image &screenBuffer)
   int j = 0;
   Point starting_pos_player{.x = i * 54, .y = j * 32};
   Point_s starting_pos_s{.x = i * 54, .y = j * 32};
-  for (int i = 0; i < 19; i++)
+  for (int j = 0; j < 32; j++)
   {
-    for (int j = 0; j < 32; j++)
+    for (int i = 0; i < 19; i++)
     {
       if (letter == '.')
       {
@@ -226,10 +237,14 @@ Point Lab_C(char letter, FILE *fp, Image &screenBuffer)
       }
       if (letter == '@')
       {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        Path_3 path{starting_pos_s};
+        path.Draw(screenBuffer);
         starting_pos_player = {.x = i * 54, .y = j * 32};
       }
       letter = fgetc(fp);
     }
+    letter = fgetc(fp);
   }
   return starting_pos_player;
 }
@@ -240,8 +255,9 @@ Point Lab_D(char letter, FILE *fp, Image &screenBuffer)
   int j = 0;
   Point starting_pos_player{.x = i * 54, .y = j * 32};
   Point_s starting_pos_s{.x = i * 54, .y = j * 32};
-  for (int i = 0; i < 19; i++)
-    for (int j = 0; j < 32; j++)
+  for (int j = 0; j < 32; j++)
+  {
+    for (int i = 0; i < 19; i++)
     {
       if (letter == '.')
       {
@@ -275,10 +291,15 @@ Point Lab_D(char letter, FILE *fp, Image &screenBuffer)
       }
       if (letter == '@')
       {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        Path_4 path{starting_pos_s};
+        path.Draw(screenBuffer);
         starting_pos_player = {.x = i * 54, .y = j * 32};
       }
       letter = fgetc(fp);
     }
+    letter = fgetc(fp);
+  }
   return starting_pos_player;
 }
 
@@ -347,10 +368,11 @@ int main(int argc, char **argv)
   GLenum gl_error = glGetError();
   while (gl_error != GL_NO_ERROR)
     gl_error = glGetError();
-
+  letter = fgetc(fp);
   Image img("../resources/tex.png");
   Image screenBuffer(WINDOW_WIDTH, WINDOW_HEIGHT, 4);
   Point starting_pos_player;
+
   if (check == 'A')
     starting_pos_player = Lab_A(letter, fp, screenBuffer);
   if (check == 'B')
@@ -360,12 +382,12 @@ int main(int argc, char **argv)
   if (check == 'D')
     starting_pos_player = Lab_D(letter, fp, screenBuffer);
   screenBuffer.ScreenSave();
+  
   Player player{starting_pos_player};
   glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
   GL_CHECK_ERRORS;
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
   GL_CHECK_ERRORS;
-
   //game loop
   while (!glfwWindowShouldClose(window))
   {
@@ -375,6 +397,7 @@ int main(int argc, char **argv)
     // проверяем события и вызыываем функции обратного вызова
     glfwPollEvents();
     // команды отрисовки
+
     processPlayerMovement(player);
     player.Draw(screenBuffer);
 

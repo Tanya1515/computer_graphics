@@ -10,6 +10,13 @@ static Pixel blend(Pixel oldPixel, Pixel newPixel)
   return newPixel;
 }
 
+bool Checked(int x, int y, Image &screen)
+{
+  if (screen.GetType(x, y) == 1)
+    return false;
+  return true;
+}
+
 bool Player::Moved() const
 {
   if (coords.x == old_coords.x && coords.y == old_coords.y)
@@ -46,24 +53,27 @@ void Player::ProcessInput(MovementDir dir)
 
 void Player::Draw(Image &screen)
 {
-
+  static Image floor_2("resources/zaya_pol_uho.png");
+  static Image floor_3("resources/zaya_sogn_uho.png");
+  static Image floor_1("resources/zaya.png");
   if (Moved())
   {
     for (int y = old_coords.y; y <= old_coords.y + tileSize; ++y)
     {
       for (int x = old_coords.x; x <= old_coords.x + tileSize; ++x)
       {
-        screen.PutPixel(x, y, screen.data_save[y * screen.Width() + x]);
+        //if (Checked(x, y, screen))
+
+          screen.PutPixel(x, y, screen.data_save[y * screen.Width() + x]);
       }
     }
     old_coords = coords;
   }
-  Image floor("resources/zaya.png");
   for (int y = coords.y; y <= coords.y + tileSize; ++y)
   {
     for (int x = coords.x; x <= coords.x + tileSize; ++x)
     {
-      Pixel pix = blend(screen.data_save[y * screen.Width() + x], floor.GetPixel(x - coords.x, tileSize - y + coords.y));
+      Pixel pix = blend(screen.data_save[y * screen.Width() + x], floor_1.GetPixel(x - coords.x, tileSize - y + coords.y));
       screen.PutPixel(x, y, pix);
     }
   }

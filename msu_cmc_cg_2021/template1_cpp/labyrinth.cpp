@@ -44,6 +44,7 @@ void Wall_1::Draw(Image &screen)
         {
             Pixel pix = floor.GetPixel(x - coords.x + 132, y - coords.y);
             screen.PutPixel(x, y, pix);
+            //screen.PutType(x, y, 1);
         }
     }
 }
