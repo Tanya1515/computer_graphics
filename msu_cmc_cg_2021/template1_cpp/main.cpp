@@ -359,6 +359,7 @@ int main(int argc, char **argv)
     starting_pos_player = Lab_C(letter, fp, screenBuffer);
   if (check == 'D')
     starting_pos_player = Lab_D(letter, fp, screenBuffer);
+  screenBuffer.ScreenSave();
   Player player{starting_pos_player};
   glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
   GL_CHECK_ERRORS;
@@ -383,6 +384,7 @@ int main(int argc, char **argv)
     GL_CHECK_ERRORS;
 
     // меняем буферы местами
+
     glfwSwapBuffers(window);
   }
   fclose(fp);

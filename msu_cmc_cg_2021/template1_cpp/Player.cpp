@@ -53,7 +53,7 @@ void Player::Draw(Image &screen)
     {
       for (int x = old_coords.x; x <= old_coords.x + tileSize; ++x)
       {
-        screen.PutPixel(x, y, backgroundColor);
+        screen.PutPixel(x, y, screen.data_save[y * screen.Width() + x]);
       }
     }
     old_coords = coords;
@@ -63,7 +63,7 @@ void Player::Draw(Image &screen)
   {
     for (int x = coords.x; x <= coords.x + tileSize; ++x)
     {
-      Pixel pix = blend(backgroundColor, floor.GetPixel(x - coords.x, tileSize - y + coords.y));
+      Pixel pix = blend(screen.data_save[y * screen.Width() + x], floor.GetPixel(x - coords.x, tileSize - y + coords.y));
       screen.PutPixel(x, y, pix);
     }
   }

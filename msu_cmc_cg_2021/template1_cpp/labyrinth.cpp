@@ -29,7 +29,7 @@ void Path_1::Draw(Image &screen)
     {
         for (int x = coords.x; x <= coords.x + 54; ++x)
         {
-            Pixel pix = blend(backgroundColor, floor.GetPixel(x - coords.x, y - coords.y));
+            Pixel pix = floor.GetPixel(x - coords.x, y - coords.y);
             screen.PutPixel(x, y, pix);
         }
     }

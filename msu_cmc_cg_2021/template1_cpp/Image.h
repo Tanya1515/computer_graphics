@@ -27,6 +27,8 @@ struct Image
   int Channels() const { return channels; }
   size_t Size() const { return size; }
   Pixel *Data() { return data; }
+  void ScreenSave();
+  Pixel *data_save = nullptr;
 
   Pixel GetPixel(int x, int y) { return data[width * y + x]; }
   void PutPixel(int x, int y, const Pixel &pix) { data[width * y + x] = pix; }
@@ -39,6 +41,7 @@ private:
   int channels = 3;
   size_t size = 0;
   Pixel *data = nullptr;
+
   bool self_allocated = false;
 };
 
