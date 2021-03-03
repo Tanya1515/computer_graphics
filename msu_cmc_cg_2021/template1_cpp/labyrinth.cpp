@@ -44,7 +44,7 @@ void Wall_1::Draw(Image &screen)
         {
             Pixel pix = floor.GetPixel(x - coords.x + 132, y - coords.y);
             screen.PutPixel(x, y, pix);
-            //screen.PutType(x, y, 1);
+            screen.PutType(x, y, 1);
         }
     }
 }
@@ -58,6 +58,7 @@ void Wall_2::Draw(Image &screen)
         {
             Pixel pix = floor.GetPixel(x - coords.x + 132, y - coords.y + 100);
             screen.PutPixel(x, y, pix);
+            screen.PutType(x, y, 1);
         }
     }
 }
@@ -84,6 +85,7 @@ void Wall_3::Draw(Image &screen)
         {
             Pixel pix = floor.GetPixel(x - coords.x + 132, y - coords.y + 193);
             screen.PutPixel(x, y, pix);
+            screen.PutType(x, y, 1);
         }
     }
 }
@@ -110,6 +112,7 @@ void Wall_4::Draw(Image &screen)
         {
             Pixel pix = floor.GetPixel(x - coords.x + 132, y - coords.y + 293);
             screen.PutPixel(x, y, pix);
+            screen.PutType(x, y, 1);
         }
     }
 }

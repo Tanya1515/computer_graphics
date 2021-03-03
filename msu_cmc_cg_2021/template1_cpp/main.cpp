@@ -43,16 +43,16 @@ void OnKeyboardPressed(GLFWwindow *window, int key, int scancode, int action, in
 }
 
 // движение объекта и кнопки на клавиатуре
-void processPlayerMovement(Player &player)
+void processPlayerMovement(Player &player, Image &screen)
 {
   if (Input.keys[GLFW_KEY_W])
-    player.ProcessInput(MovementDir::UP);
+    player.ProcessInput(MovementDir::UP, screen);
   else if (Input.keys[GLFW_KEY_S])
-    player.ProcessInput(MovementDir::DOWN);
+    player.ProcessInput(MovementDir::DOWN, screen);
   if (Input.keys[GLFW_KEY_A])
-    player.ProcessInput(MovementDir::LEFT);
+    player.ProcessInput(MovementDir::LEFT, screen);
   else if (Input.keys[GLFW_KEY_D])
-    player.ProcessInput(MovementDir::RIGHT);
+    player.ProcessInput(MovementDir::RIGHT, screen);
 }
 
 // движения мышки, если правая кнопка - курсор пропадает, если левая - появляется
@@ -382,7 +382,7 @@ int main(int argc, char **argv)
   if (check == 'D')
     starting_pos_player = Lab_D(letter, fp, screenBuffer);
   screenBuffer.ScreenSave();
-  
+
   Player player{starting_pos_player};
   glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
   GL_CHECK_ERRORS;
@@ -398,7 +398,7 @@ int main(int argc, char **argv)
     glfwPollEvents();
     // команды отрисовки
 
-    processPlayerMovement(player);
+    processPlayerMovement(player, screenBuffer);
     player.Draw(screenBuffer);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

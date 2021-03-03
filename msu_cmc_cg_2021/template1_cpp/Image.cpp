@@ -18,6 +18,7 @@ Image::Image(const std::string &a_path)
 Image::Image(int a_width, int a_height, int a_channels)
 {
   data = new Pixel[a_width * a_height]{};
+  data_obj = new int[a_width * a_height];
 
   if (data != nullptr)
   {

@@ -25,26 +25,38 @@ bool Player::Moved() const
     return true;
 }
 // как изменяются координаты при движении вверх, вниз, вправо и влево
-void Player::ProcessInput(MovementDir dir)
+void Player::ProcessInput(MovementDir dir, Image &screen)
 {
   int move_dist = move_speed * 1;
   switch (dir)
   {
   case MovementDir::UP:
-    old_coords.y = coords.y;
-    coords.y += move_dist;
+    if (Checked(coords.x + 16, coords.y + 32 + move_dist, screen))
+    {
+      old_coords.y = coords.y;
+      coords.y += move_dist;
+    }
     break;
   case MovementDir::DOWN:
-    old_coords.y = coords.y;
-    coords.y -= move_dist;
+    if (Checked(coords.x + 16, coords.y - move_dist, screen))
+    {
+      old_coords.y = coords.y;
+      coords.y -= move_dist;
+    }
     break;
   case MovementDir::LEFT:
-    old_coords.x = coords.x;
-    coords.x -= move_dist;
+    if (Checked(coords.x - move_dist, coords.y, screen))
+    {
+      old_coords.x = coords.x;
+      coords.x -= move_dist;
+    }
     break;
   case MovementDir::RIGHT:
-    old_coords.x = coords.x;
-    coords.x += move_dist;
+    if (Checked(coords.x + 32 + move_dist, coords.y, screen))
+    {
+      old_coords.x = coords.x;
+      coords.x += move_dist;
+    }
     break;
   default:
     break;
@@ -62,19 +74,22 @@ void Player::Draw(Image &screen)
     {
       for (int x = old_coords.x; x <= old_coords.x + tileSize; ++x)
       {
-        //if (Checked(x, y, screen))
-
-          screen.PutPixel(x, y, screen.data_save[y * screen.Width() + x]);
+        screen.PutPixel(x, y, screen.data_save[y * screen.Width() + x]);
       }
     }
     old_coords = coords;
   }
-  for (int y = coords.y; y <= coords.y + tileSize; ++y)
+
+  if (!Moved())
   {
-    for (int x = coords.x; x <= coords.x + tileSize; ++x)
+    for (int y = coords.y; y <= coords.y + tileSize; ++y)
     {
-      Pixel pix = blend(screen.data_save[y * screen.Width() + x], floor_1.GetPixel(x - coords.x, tileSize - y + coords.y));
-      screen.PutPixel(x, y, pix);
+      for (int x = coords.x; x <= coords.x + tileSize; ++x)
+      {
+        //screen.PutPixel(x, y, color);
+        Pixel pix = blend(screen.data_save[y * screen.Width() + x], floor_1.GetPixel(x - coords.x, tileSize - y + coords.y));
+        screen.PutPixel(x, y, pix);
+      }
     }
   }
 }

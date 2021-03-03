@@ -3,7 +3,7 @@
 
 #include <string>
 
-constexpr int tileSize = 115;
+constexpr int tileSize = 32;
 
 struct Pixel
 {
@@ -32,8 +32,8 @@ struct Image
 
   Pixel GetPixel(int x, int y) { return data[width * y + x]; }
   void PutPixel(int x, int y, const Pixel &pix) { data[width * y + x] = pix; }
-  void PutType(int x, int y, int type) { data_obj[width * y + x] = type; }
-  int GetType(int x, int y) { return data_obj[width * y + x]; }
+  void PutType(int x, int y, int type) { data_obj[width * (y) + x] = type; }
+  int GetType(int x, int y) { return data_obj[width * (y) + x]; }
 
   ~Image();
 
