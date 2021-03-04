@@ -188,6 +188,45 @@ void Door::Draw(Image &screen)
             Pixel pix = floor.GetPixel(x - coords.x + 192, y - coords.y + 143);
             screen.PutPixel(coords.x + shift_x, coords.y + shift_y, pix);
             shift_y++;
+            screen.PutType(x, y, 4);
+        }
+        shift_x++;
+        shift_y = 0;
+    }
+}
+
+void Door_Open::Draw(Image &screen)
+{
+    static Image floor("resources/doors.png");
+    static int shift_y = 0;
+    static int shift_x = 0;
+    for (int y = coords.y; y <= coords.y + 52; ++y)
+    {
+        for (int x = coords.x; x <= coords.x + 32; ++x)
+        {
+            Pixel pix = floor.GetPixel(x - coords.x + 192, y - coords.y + 143);
+            screen.PutPixel(coords.x + shift_x, coords.y + shift_y, pix);
+            shift_y++;
+            screen.PutType(x, y, 4);
+        }
+        shift_x++;
+        shift_y = 0;
+    }
+}
+
+void Door_Half_Open::Draw(Image &screen)
+{
+    static Image floor("resources/doors.png");
+    static int shift_y = 0;
+    static int shift_x = 0;
+    for (int y = coords.y; y <= coords.y + 52; ++y)
+    {
+        for (int x = coords.x; x <= coords.x + 32; ++x)
+        {
+            Pixel pix = floor.GetPixel(x - coords.x + 192, y - coords.y + 143);
+            screen.PutPixel(coords.x + shift_x, coords.y + shift_y, pix);
+            shift_y++;
+            screen.PutType(x, y, 4);
         }
         shift_x++;
         shift_y = 0;

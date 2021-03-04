@@ -105,6 +105,28 @@ private:
     Point_s old_coords{.x = 15, .y = 15};
 };
 
+struct Door_Half_Open
+{
+    explicit Door_Half_Open(Point_s pos = {.x = 10, .y = 10}) : coords(pos), old_coords(coords){};
+
+    void Draw(Image &screen);
+
+private:
+    Point_s coords{.x = 0, .y = 0};
+    Point_s old_coords{.x = 15, .y = 15};
+};
+
+struct Door_Open
+{
+    explicit Door_Open(Point_s pos = {.x = 10, .y = 10}) : coords(pos), old_coords(coords){};
+
+    void Draw(Image &screen);
+
+private:
+    Point_s coords{.x = 0, .y = 0};
+    Point_s old_coords{.x = 15, .y = 15};
+};
+
 struct Trap_1
 {
     explicit Trap_1(Point_s pos = {.x = 10, .y = 10}) : coords(pos), old_coords(coords){};

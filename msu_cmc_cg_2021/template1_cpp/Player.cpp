@@ -44,7 +44,7 @@ int Player::ProcessInput(MovementDir dir, Image &screen)
     {
       old_coords.y = coords.y;
       coords.y += move_dist;
-      if (Checked(coords.x, coords.y + 16, screen) == 2)
+      if (Checked(coords.x + 10, coords.y + 16, screen) == 2)
         return 2;
       if (Checked(coords.x, coords.y, screen) == 3)
         return 3;
@@ -61,7 +61,7 @@ int Player::ProcessInput(MovementDir dir, Image &screen)
       coords.y -= move_dist;
       if (Checked(coords.x + 16, coords.y + 2, screen) == 2)
         return 2;
-      if (Checked(coords.x, coords.y, screen) == 3)
+      if (Checked(coords.x, coords.y + 25, screen) == 3)
         return 3;
       if (Checked(coords.x, coords.y, screen) == 4)
         return 4;
@@ -76,7 +76,7 @@ int Player::ProcessInput(MovementDir dir, Image &screen)
       coords.x -= move_dist;
       if (Checked(coords.x + 16, coords.y, screen) == 2)
         return 2;
-      if (Checked(coords.x, coords.y, screen) == 3)
+      if (Checked(coords.x + 16, coords.y, screen) == 3)
         return 3;
       if (Checked(coords.x, coords.y, screen) == 4)
         return 4;
@@ -85,13 +85,13 @@ int Player::ProcessInput(MovementDir dir, Image &screen)
     }
     break;
   case MovementDir::RIGHT:
-    if (Checked(coords.x + 32 + move_dist, coords.y + 16, screen) != 1)
+    if (Checked(coords.x + 20 + move_dist, coords.y + 16, screen) != 1)
     {
       old_coords.x = coords.x;
       coords.x += move_dist;
-      if (Checked(coords.x + 16, coords.y, screen) == 2)
+      if (Checked(coords.x + 16, coords.y - 2, screen) == 2)
         return 2;
-      if (Checked(coords.x, coords.y, screen) == 3)
+      if (Checked(coords.x + 16, coords.y, screen) == 3)
         return 3;
       if (Checked(coords.x, coords.y, screen) == 4)
         return 4;
@@ -104,11 +104,11 @@ int Player::ProcessInput(MovementDir dir, Image &screen)
   }
 }
 
-void Player::Draw(Image &screen)
+void Player::Draw(Image &screen, float zaya)
 {
-  static Image floor_2("resources/zaya_pol_uho.png");
-  static Image floor_3("resources/zaya_sogn_uho.png");
-  static Image floor_1("resources/zaya.png");
+  static Image zaya_2("resources/zaya_pol_uho.png");
+  static Image zaya_3("resources/zaya_sogn_uho.png");
+  static Image zaya_1("resources/zaya.png");
   if (Moved())
   {
     for (int y = old_coords.y; y <= old_coords.y + tileSize; ++y)
@@ -128,8 +128,21 @@ void Player::Draw(Image &screen)
       for (int x = coords.x; x <= coords.x + tileSize; ++x)
       {
         //screen.PutPixel(x, y, color);
-        Pixel pix = blend(screen.data_save[y * screen.Width() + x], floor_1.GetPixel(x - coords.x, tileSize - y + coords.y));
-        screen.PutPixel(x, y, pix);
+        if (zaya <= 0.2)
+        {
+          Pixel pix = blend(screen.data_save[y * screen.Width() + x], zaya_1.GetPixel(x - coords.x, tileSize - y + coords.y));
+          screen.PutPixel(x, y, pix);
+        }
+        else if (zaya <= 0.4)
+        {
+          Pixel pix = blend(screen.data_save[y * screen.Width() + x], zaya_2.GetPixel(x - coords.x, tileSize - y + coords.y));
+          screen.PutPixel(x, y, pix);
+        }
+        else
+        {
+          Pixel pix = blend(screen.data_save[y * screen.Width() + x], zaya_3.GetPixel(x - coords.x, tileSize - y + coords.y));
+          screen.PutPixel(x, y, pix);
+        }
       }
     }
   }

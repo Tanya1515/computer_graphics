@@ -171,7 +171,7 @@ Point Lab_B(char letter, FILE *fp, Image &screenBuffer)
       }
       if (letter == 'x')
       {
-        std::cout << "press ESC to exit" << std::endl;
+
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Door door{starting_pos_s};
         door.Draw(screenBuffer);
@@ -328,6 +328,21 @@ Point Lab_D(char letter, FILE *fp, Image &screenBuffer)
   return starting_pos_player;
 }
 
+Point Draw_Lab(char letter, char check, FILE *fp, Image &screenBuffer)
+{
+  Point starting_pos_player;
+  if (check == 'A')
+    starting_pos_player = Lab_A(letter, fp, screenBuffer);
+  if (check == 'B')
+    starting_pos_player = Lab_B(letter, fp, screenBuffer);
+  if (check == 'C')
+    starting_pos_player = Lab_C(letter, fp, screenBuffer);
+  if (check == 'D')
+    starting_pos_player = Lab_D(letter, fp, screenBuffer);
+  screenBuffer.ScreenSave();
+  return starting_pos_player;
+}
+
 void OnMouseScroll(GLFWwindow *window, double xoffset, double yoffset)
 {
   // ...
@@ -354,12 +369,19 @@ int initGL()
   return 0;
 }
 
-int main(int argc, char **argv)
+FILE *file_open(char *name)
 {
   FILE *fp;
-  fp = fopen(argv[1], "r+");
-  char check = fgetc(fp);
+  fp = fopen(name, "r+");
+  return fp;
+}
+
+int main(int argc, char **argv)
+{
+  FILE *fp = file_open("room2");
+  char check = 'A';
   char letter = fgetc(fp);
+  int amount_rooms = 1;
   //инициализация GLFW
   if (!glfwInit())
     return -1;
@@ -393,38 +415,31 @@ int main(int argc, char **argv)
   GLenum gl_error = glGetError();
   while (gl_error != GL_NO_ERROR)
     gl_error = glGetError();
-  letter = fgetc(fp);
   Image img("../resources/tex.png");
   Image screenBuffer(WINDOW_WIDTH, WINDOW_HEIGHT, 4);
   Point starting_pos_player;
-
-  if (check == 'A')
-    starting_pos_player = Lab_A(letter, fp, screenBuffer);
-  if (check == 'B')
-    starting_pos_player = Lab_B(letter, fp, screenBuffer);
-  if (check == 'C')
-    starting_pos_player = Lab_C(letter, fp, screenBuffer);
-  if (check == 'D')
-    starting_pos_player = Lab_D(letter, fp, screenBuffer);
-  screenBuffer.ScreenSave();
-
-  Player player{starting_pos_player};
+  Player player{Draw_Lab(letter, check, fp, screenBuffer)};
   glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
   GL_CHECK_ERRORS;
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
   GL_CHECK_ERRORS;
   int check_game_over = 0;
   Point_s starting_pose_game;
+  float zaya = 0;
   //game loop
   while (!glfwWindowShouldClose(window))
   {
+    if (zaya >= 1)
+      zaya = 0;
     GLfloat currentFrame = glfwGetTime();
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
+
     // проверяем события и вызыываем функции обратного вызова
     glfwPollEvents();
     // команды отрисовки
 
+    zaya = zaya + deltaTime;
     check_game_over = processPlayerMovement(player, screenBuffer);
     if ((check_game_over == 2) || (check_game_over == 5))
     {
@@ -439,7 +454,62 @@ int main(int argc, char **argv)
       win game{starting_pose_game};
       game.Draw(screenBuffer);
     }
-    player.Draw(screenBuffer);
+    if (check_game_over == 4)
+    {
+      for (int j = 0; j < 32; j++)
+      {
+        for (int i = 0; i < 19; i++)
+        {
+          starting_pose_game = {.x = i * 54, .y = j * 32};
+          nothing no{starting_pose_game};
+          no.Draw(screenBuffer);
+        }
+      }
+      amount_rooms = amount_rooms + 1;
+      if (amount_rooms == 20)
+      {
+        player.move_speed = 0;
+        check = 'A';
+        FILE *fp = file_open("room5");
+        Player player{Draw_Lab(letter, check, fp, screenBuffer)};
+        player.move_speed = 4;
+      }
+      if (amount_rooms % 4 == 1)
+      {
+        player.move_speed = 0;
+        check = 'A';
+        FILE *fp = file_open("room1");
+        Player player{Draw_Lab(letter, check, fp, screenBuffer)};
+        player.move_speed = 4;
+      }
+      if (amount_rooms % 4 == 2)
+      {
+        player.move_speed = 0;
+        check = 'B';
+        FILE *fp = file_open("room2");
+        Player player{Draw_Lab(letter, check, fp, screenBuffer)};
+        std::cout << 33 << std::endl;
+        player.move_speed = 4;
+      }
+      if (amount_rooms % 4 == 3)
+      {
+        player.move_speed = 0;
+        check = 'C';
+        FILE *fp = file_open("room3");
+        Player player{Draw_Lab(letter, check, fp, screenBuffer)};
+        player.move_speed = 4;
+      }
+      if ((amount_rooms % 4 == 0) && (amount_rooms != 20))
+      {
+        player.move_speed = 0;
+        check = 'D';
+        FILE *fp = file_open("room4");
+        Player player{Draw_Lab(letter, check, fp, screenBuffer)};
+        player.move_speed = 4;
+      }
+    }
+
+    player.Draw(screenBuffer, zaya);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     GL_CHECK_ERRORS;

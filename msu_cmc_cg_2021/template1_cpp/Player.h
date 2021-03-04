@@ -23,13 +23,14 @@ struct Player
 
   bool Moved() const;
   int ProcessInput(MovementDir dir, Image &screen);
-  void Draw(Image &screen);
+  void Draw(Image &screen, float zaya);
+  int move_speed = 4;
 
 private:
   Point coords{.x = 10, .y = 10};
   Point old_coords{.x = 10, .y = 10};
   Pixel color{.r = 255, .g = 0, .b = 0, .a = 0};
-  int move_speed = 4;
+  
 };
 
 #endif //MAIN_PLAYER_H
