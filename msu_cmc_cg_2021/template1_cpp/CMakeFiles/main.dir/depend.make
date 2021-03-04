@@ -13,6 +13,10 @@ CMakeFiles/main.dir/Image.cpp.o: stb_image_write.h
 CMakeFiles/main.dir/Player.cpp.o: Image.h
 CMakeFiles/main.dir/Player.cpp.o: Player.cpp
 CMakeFiles/main.dir/Player.cpp.o: Player.h
+CMakeFiles/main.dir/Player.cpp.o: common.h
+CMakeFiles/main.dir/Player.cpp.o: labyrinth.h
+CMakeFiles/main.dir/Player.cpp.o: dependencies/include/GLAD/KHR/khrplatform.h
+CMakeFiles/main.dir/Player.cpp.o: dependencies/include/GLAD/glad/glad.h
 
 CMakeFiles/main.dir/labyrinth.cpp.o: Image.h
 CMakeFiles/main.dir/labyrinth.cpp.o: labyrinth.cpp

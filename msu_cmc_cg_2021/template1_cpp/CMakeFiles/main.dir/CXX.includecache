@@ -23,6 +23,10 @@ string
 /home/tanya/mashgraph/msu_cmc_cg_2021/template1_cpp/Player.cpp
 Player.h
 /home/tanya/mashgraph/msu_cmc_cg_2021/template1_cpp/Player.h
+labyrinth.h
+/home/tanya/mashgraph/msu_cmc_cg_2021/template1_cpp/labyrinth.h
+common.h
+/home/tanya/mashgraph/msu_cmc_cg_2021/template1_cpp/common.h
 
 /home/tanya/mashgraph/msu_cmc_cg_2021/template1_cpp/Player.h
 Image.h
@@ -57,6 +61,8 @@ Player.h
 /home/tanya/mashgraph/msu_cmc_cg_2021/template1_cpp/Player.h
 labyrinth.h
 /home/tanya/mashgraph/msu_cmc_cg_2021/template1_cpp/labyrinth.h
+unistd.h
+/home/tanya/mashgraph/msu_cmc_cg_2021/template1_cpp/unistd.h
 GLFW/glfw3.h
 -
 

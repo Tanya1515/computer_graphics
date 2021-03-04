@@ -2,6 +2,7 @@
 #include "Image.h"
 #include "Player.h"
 #include "labyrinth.h"
+#include "unistd.h"
 
 #define GLFW_DLL
 #include <GLFW/glfw3.h>
@@ -43,16 +44,16 @@ void OnKeyboardPressed(GLFWwindow *window, int key, int scancode, int action, in
 }
 
 // движение объекта и кнопки на клавиатуре
-void processPlayerMovement(Player &player, Image &screen)
+int processPlayerMovement(Player &player, Image &screen)
 {
   if (Input.keys[GLFW_KEY_W])
-    player.ProcessInput(MovementDir::UP, screen);
+    return player.ProcessInput(MovementDir::UP, screen);
   else if (Input.keys[GLFW_KEY_S])
-    player.ProcessInput(MovementDir::DOWN, screen);
+    return player.ProcessInput(MovementDir::DOWN, screen);
   if (Input.keys[GLFW_KEY_A])
-    player.ProcessInput(MovementDir::LEFT, screen);
+    return player.ProcessInput(MovementDir::LEFT, screen);
   else if (Input.keys[GLFW_KEY_D])
-    player.ProcessInput(MovementDir::RIGHT, screen);
+    return player.ProcessInput(MovementDir::RIGHT, screen);
 }
 
 // движения мышки, если правая кнопка - курсор пропадает, если левая - появляется
@@ -111,7 +112,7 @@ Point Lab_A(char letter, FILE *fp, Image &screenBuffer)
       if (letter == 'x')
       {
         starting_pos_s = {.x = i * 54, .y = j * 32};
-        Door_1 door{starting_pos_s};
+        Door door{starting_pos_s};
         door.Draw(screenBuffer);
       }
       if (letter == '*')
@@ -132,6 +133,12 @@ Point Lab_A(char letter, FILE *fp, Image &screenBuffer)
         Path_1 path{starting_pos_s};
         path.Draw(screenBuffer);
         starting_pos_player = {.x = i * 54, .y = j * 32};
+      }
+      if (letter == 'Q')
+      {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        end door{starting_pos_s};
+        door.Draw(screenBuffer);
       }
       letter = fgetc(fp);
     }
@@ -166,7 +173,7 @@ Point Lab_B(char letter, FILE *fp, Image &screenBuffer)
       {
         std::cout << "press ESC to exit" << std::endl;
         starting_pos_s = {.x = i * 54, .y = j * 32};
-        Door_2 door{starting_pos_s};
+        Door door{starting_pos_s};
         door.Draw(screenBuffer);
       }
       if (letter == '*')
@@ -187,6 +194,12 @@ Point Lab_B(char letter, FILE *fp, Image &screenBuffer)
         Path_2 path{starting_pos_s};
         path.Draw(screenBuffer);
         starting_pos_player = {.x = i * 54, .y = j * 32};
+      }
+      if (letter == 'Q')
+      {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        end door{starting_pos_s};
+        door.Draw(screenBuffer);
       }
       letter = fgetc(fp);
     }
@@ -226,7 +239,7 @@ Point Lab_C(char letter, FILE *fp, Image &screenBuffer)
       if (letter == 'x')
       {
         starting_pos_s = {.x = i * 54, .y = j * 32};
-        Door_3 door{starting_pos_s};
+        Door door{starting_pos_s};
         door.Draw(screenBuffer);
       }
       if (letter == ' ')
@@ -241,6 +254,12 @@ Point Lab_C(char letter, FILE *fp, Image &screenBuffer)
         Path_3 path{starting_pos_s};
         path.Draw(screenBuffer);
         starting_pos_player = {.x = i * 54, .y = j * 32};
+      }
+      if (letter == 'Q')
+      {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        end door{starting_pos_s};
+        door.Draw(screenBuffer);
       }
       letter = fgetc(fp);
     }
@@ -274,7 +293,7 @@ Point Lab_D(char letter, FILE *fp, Image &screenBuffer)
       if (letter == 'x')
       {
         starting_pos_s = {.x = i * 54, .y = j * 32};
-        Door_4 door{starting_pos_s};
+        Door door{starting_pos_s};
         door.Draw(screenBuffer);
       }
       if (letter == '*')
@@ -295,6 +314,12 @@ Point Lab_D(char letter, FILE *fp, Image &screenBuffer)
         Path_4 path{starting_pos_s};
         path.Draw(screenBuffer);
         starting_pos_player = {.x = i * 54, .y = j * 32};
+      }
+      if (letter == 'Q')
+      {
+        starting_pos_s = {.x = i * 54, .y = j * 32};
+        end door{starting_pos_s};
+        door.Draw(screenBuffer);
       }
       letter = fgetc(fp);
     }
@@ -388,6 +413,8 @@ int main(int argc, char **argv)
   GL_CHECK_ERRORS;
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
   GL_CHECK_ERRORS;
+  int check_game_over = 0;
+  Point_s starting_pose_game;
   //game loop
   while (!glfwWindowShouldClose(window))
   {
@@ -398,7 +425,20 @@ int main(int argc, char **argv)
     glfwPollEvents();
     // команды отрисовки
 
-    processPlayerMovement(player, screenBuffer);
+    check_game_over = processPlayerMovement(player, screenBuffer);
+    if ((check_game_over == 2) || (check_game_over == 5))
+    {
+      starting_pose_game = {250, 400};
+      game_over game{starting_pose_game};
+      game.Draw(screenBuffer);
+    }
+
+    if (check_game_over == 3)
+    {
+      starting_pose_game = {270, 400};
+      win game{starting_pose_game};
+      game.Draw(screenBuffer);
+    }
     player.Draw(screenBuffer);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -409,6 +449,11 @@ int main(int argc, char **argv)
     // меняем буферы местами
 
     glfwSwapBuffers(window);
+    if ((check_game_over == 2) || (check_game_over == 3) || (check_game_over == 5))
+    {
+      sleep(5);
+      break;
+    }
   }
   fclose(fp);
   glfwTerminate();

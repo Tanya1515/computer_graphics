@@ -6,6 +6,39 @@ struct Point_s
     int y;
 };
 
+struct end
+{
+    explicit end(Point_s pos = {.x = 10, .y = 10}) : coords(pos), old_coords(coords){};
+
+    void Draw(Image &screen);
+
+private:
+    Point_s coords{.x = 0, .y = 0};
+    Point_s old_coords{.x = 15, .y = 15};
+};
+
+struct win
+{
+    explicit win(Point_s pos = {.x = 10, .y = 10}) : coords(pos), old_coords(coords){};
+
+    void Draw(Image &screen);
+
+private:
+    Point_s coords{.x = 0, .y = 0};
+    Point_s old_coords{.x = 15, .y = 15};
+};
+
+struct game_over
+{
+    explicit game_over(Point_s pos = {.x = 10, .y = 10}) : coords(pos), old_coords(coords){};
+
+    void Draw(Image &screen);
+
+private:
+    Point_s coords{.x = 0, .y = 0};
+    Point_s old_coords{.x = 15, .y = 15};
+};
+
 struct nothing
 {
     explicit nothing(Point_s pos = {.x = 10, .y = 10}) : coords(pos), old_coords(coords){};
@@ -61,42 +94,9 @@ private:
     Point_s old_coords{.x = 15, .y = 15};
 };
 
-struct Door_1
+struct Door
 {
-    explicit Door_1(Point_s pos = {.x = 10, .y = 10}) : coords(pos), old_coords(coords){};
-
-    void Draw(Image &screen);
-
-private:
-    Point_s coords{.x = 0, .y = 0};
-    Point_s old_coords{.x = 15, .y = 15};
-};
-
-struct Door_2
-{
-    explicit Door_2(Point_s pos = {.x = 10, .y = 10}) : coords(pos), old_coords(coords){};
-
-    void Draw(Image &screen);
-
-private:
-    Point_s coords{.x = 0, .y = 0};
-    Point_s old_coords{.x = 15, .y = 15};
-};
-
-struct Door_3
-{
-    explicit Door_3(Point_s pos = {.x = 10, .y = 10}) : coords(pos), old_coords(coords){};
-
-    void Draw(Image &screen);
-
-private:
-    Point_s coords{.x = 0, .y = 0};
-    Point_s old_coords{.x = 15, .y = 15};
-};
-
-struct Door_4
-{
-    explicit Door_4(Point_s pos = {.x = 10, .y = 10}) : coords(pos), old_coords(coords){};
+    explicit Door(Point_s pos = {.x = 10, .y = 10}) : coords(pos), old_coords(coords){};
 
     void Draw(Image &screen);
 

@@ -1,4 +1,6 @@
 #include "Player.h"
+#include "labyrinth.h"
+#include "common.h"
 
 static Pixel blend(Pixel oldPixel, Pixel newPixel)
 {
@@ -10,11 +12,18 @@ static Pixel blend(Pixel oldPixel, Pixel newPixel)
   return newPixel;
 }
 
-bool Checked(int x, int y, Image &screen)
+int Checked(int x, int y, Image &screen)
 {
-  if (screen.GetType(x, y) == 1)
-    return false;
-  return true;
+  if (screen.GetType(x, y) == 1) //wall
+    return 1;
+  if (screen.GetType(x, y) == 2) //empty place
+    return 2;
+  if (screen.GetType(x, y) == 3) //quit from labyrinth
+    return 3;
+  if (screen.GetType(x, y) == 4) //door to another room
+    return 4;
+  if (screen.GetType(x, y) == 5) //trap
+    return 5;
 }
 
 bool Player::Moved() const
@@ -25,37 +34,69 @@ bool Player::Moved() const
     return true;
 }
 // как изменяются координаты при движении вверх, вниз, вправо и влево
-void Player::ProcessInput(MovementDir dir, Image &screen)
+int Player::ProcessInput(MovementDir dir, Image &screen)
 {
   int move_dist = move_speed * 1;
   switch (dir)
   {
   case MovementDir::UP:
-    if (Checked(coords.x + 16, coords.y + 32 + move_dist, screen))
+    if (Checked(coords.x + 16, coords.y + 32 + move_dist, screen) != 1)
     {
       old_coords.y = coords.y;
       coords.y += move_dist;
+      if (Checked(coords.x, coords.y + 16, screen) == 2)
+        return 2;
+      if (Checked(coords.x, coords.y, screen) == 3)
+        return 3;
+      if (Checked(coords.x, coords.y, screen) == 4)
+        return 4;
+      if (Checked(coords.x, coords.y, screen) == 5)
+        return 5;
     }
     break;
   case MovementDir::DOWN:
-    if (Checked(coords.x + 16, coords.y - move_dist, screen))
+    if (Checked(coords.x + 16, coords.y - move_dist, screen) != 1)
     {
       old_coords.y = coords.y;
       coords.y -= move_dist;
+      if (Checked(coords.x + 16, coords.y + 2, screen) == 2)
+        return 2;
+      if (Checked(coords.x, coords.y, screen) == 3)
+        return 3;
+      if (Checked(coords.x, coords.y, screen) == 4)
+        return 4;
+      if (Checked(coords.x, coords.y, screen) == 5)
+        return 5;
     }
     break;
   case MovementDir::LEFT:
-    if (Checked(coords.x - move_dist, coords.y, screen))
+    if (Checked(coords.x - move_dist, coords.y, screen) != 1)
     {
       old_coords.x = coords.x;
       coords.x -= move_dist;
+      if (Checked(coords.x + 16, coords.y, screen) == 2)
+        return 2;
+      if (Checked(coords.x, coords.y, screen) == 3)
+        return 3;
+      if (Checked(coords.x, coords.y, screen) == 4)
+        return 4;
+      if (Checked(coords.x, coords.y, screen) == 5)
+        return 5;
     }
     break;
   case MovementDir::RIGHT:
-    if (Checked(coords.x + 32 + move_dist, coords.y, screen))
+    if (Checked(coords.x + 32 + move_dist, coords.y + 16, screen) != 1)
     {
       old_coords.x = coords.x;
       coords.x += move_dist;
+      if (Checked(coords.x + 16, coords.y, screen) == 2)
+        return 2;
+      if (Checked(coords.x, coords.y, screen) == 3)
+        return 3;
+      if (Checked(coords.x, coords.y, screen) == 4)
+        return 4;
+      if (Checked(coords.x, coords.y, screen) == 5)
+        return 5;
     }
     break;
   default:

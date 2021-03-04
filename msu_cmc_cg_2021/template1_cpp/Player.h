@@ -22,7 +22,7 @@ struct Player
   explicit Player(Point pos = {.x = 10, .y = 10}) : coords(pos), old_coords(coords){};
 
   bool Moved() const;
-  void ProcessInput(MovementDir dir, Image &screen);
+  int ProcessInput(MovementDir dir, Image &screen);
   void Draw(Image &screen);
 
 private:
