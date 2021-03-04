@@ -157,6 +157,7 @@ Point Lab_B(char letter, FILE *fp, Image &screenBuffer)
   {
     for (int i = 0; i < 19; i++)
     {
+
       if (letter == '.')
       {
         starting_pos_s = {.x = i * 54, .y = j * 32};
@@ -171,7 +172,6 @@ Point Lab_B(char letter, FILE *fp, Image &screenBuffer)
       }
       if (letter == 'x')
       {
-
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Door door{starting_pos_s};
         door.Draw(screenBuffer);
@@ -330,6 +330,7 @@ Point Lab_D(char letter, FILE *fp, Image &screenBuffer)
 
 Point Draw_Lab(char letter, char check, FILE *fp, Image &screenBuffer)
 {
+  screenBuffer.ScreenType();
   Point starting_pos_player;
   if (check == 'A')
     starting_pos_player = Lab_A(letter, fp, screenBuffer);
@@ -378,7 +379,7 @@ FILE *file_open(char *name)
 
 int main(int argc, char **argv)
 {
-  FILE *fp = file_open("room2");
+  FILE *fp = file_open("room1");
   char check = 'A';
   char letter = fgetc(fp);
   int amount_rooms = 1;
@@ -418,6 +419,7 @@ int main(int argc, char **argv)
   Image img("../resources/tex.png");
   Image screenBuffer(WINDOW_WIDTH, WINDOW_HEIGHT, 4);
   Point starting_pos_player;
+  screenBuffer.ScreenType();
   Player player{Draw_Lab(letter, check, fp, screenBuffer)};
   glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
   GL_CHECK_ERRORS;
@@ -460,51 +462,64 @@ int main(int argc, char **argv)
       {
         for (int i = 0; i < 19; i++)
         {
-          starting_pose_game = {.x = i * 54, .y = j * 32};
-          nothing no{starting_pose_game};
-          no.Draw(screenBuffer);
+          // starting_pose_game = {.x = i * 54, .y = j * 32};
+          // nothing no{starting_pose_game};
+          // no.Draw(screenBuffer);
         }
       }
       amount_rooms = amount_rooms + 1;
       if (amount_rooms == 20)
       {
-        player.move_speed = 0;
+        //player.move_speed = 0;
         check = 'A';
         FILE *fp = file_open("room5");
-        Player player{Draw_Lab(letter, check, fp, screenBuffer)};
+        letter = fgetc(fp);
+        starting_pos_player = Draw_Lab(letter, check, fp, screenBuffer);
+        Player player{starting_pos_player};
         player.move_speed = 4;
       }
       if (amount_rooms % 4 == 1)
       {
-        player.move_speed = 0;
+        //player.move_speed = 0;
         check = 'A';
         FILE *fp = file_open("room1");
-        Player player{Draw_Lab(letter, check, fp, screenBuffer)};
+        letter = fgetc(fp);
+        starting_pos_player = Draw_Lab(letter, check, fp, screenBuffer);
+        Player player{starting_pos_player};
         player.move_speed = 4;
       }
       if (amount_rooms % 4 == 2)
       {
-        player.move_speed = 0;
+        //player.move_speed = 0;x
         check = 'B';
         FILE *fp = file_open("room2");
-        Player player{Draw_Lab(letter, check, fp, screenBuffer)};
-        std::cout << 33 << std::endl;
+        letter = fgetc(fp);
+        starting_pos_player = Draw_Lab(letter, check, fp, screenBuffer);
+        Player player{starting_pos_player};
+
         player.move_speed = 4;
       }
       if (amount_rooms % 4 == 3)
       {
-        player.move_speed = 0;
+        //player.move_speed = 0;
         check = 'C';
         FILE *fp = file_open("room3");
-        Player player{Draw_Lab(letter, check, fp, screenBuffer)};
+        letter = fgetc(fp);
+        starting_pos_player = Draw_Lab(letter, check, fp, screenBuffer);
+        Player player{starting_pos_player};
+
         player.move_speed = 4;
       }
       if ((amount_rooms % 4 == 0) && (amount_rooms != 20))
       {
-        player.move_speed = 0;
+        //player.move_speed = 0;
         check = 'D';
         FILE *fp = file_open("room4");
-        Player player{Draw_Lab(letter, check, fp, screenBuffer)};
+        letter = fgetc(fp);
+        starting_pos_player = Draw_Lab(letter, check, fp, screenBuffer);
+
+        Player player{starting_pos_player};
+
         player.move_speed = 4;
       }
     }

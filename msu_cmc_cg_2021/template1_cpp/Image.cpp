@@ -30,6 +30,14 @@ Image::Image(int a_width, int a_height, int a_channels)
   }
 }
 
+void Image::ScreenType()
+{
+  data_obj = new int[width * height];
+  for (int i =0; i<=width; i++)
+    for (int j =0; j<=height; j++)
+      data_obj[i,j] = 0;
+}
+
 void Image::ScreenSave()
 {
   data_save = new Pixel[width * height];
