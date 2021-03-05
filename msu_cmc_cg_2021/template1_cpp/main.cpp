@@ -114,6 +114,7 @@ Point Lab_A(char letter, FILE *fp, Image &screenBuffer)
         screenBuffer.amount_of_throns = screenBuffer.amount_of_throns + 1;
         screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
         starting_pos_player = {.x = i * 54, .y = j * 32};
+        thron = thron + 1;
         Path_1 path{starting_pos_s};
         path.Draw(screenBuffer);
       }
@@ -241,6 +242,7 @@ Point Lab_B(char letter, FILE *fp, Image &screenBuffer)
         }
         screenBuffer.amount_of_throns = screenBuffer.amount_of_throns + 1;
         screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+        thron = thron + 1;
         starting_pos_player = {.x = i * 54, .y = j * 32};
         Path_2 path{starting_pos_s};
         path.Draw(screenBuffer);
@@ -372,6 +374,7 @@ Point Lab_C(char letter, FILE *fp, Image &screenBuffer)
         }
         screenBuffer.amount_of_throns = screenBuffer.amount_of_throns + 1;
         screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+        thron = thron + 1;
         starting_pos_player = {.x = i * 54, .y = j * 32};
         Path_3 path{starting_pos_s};
         path.Draw(screenBuffer);
@@ -502,6 +505,7 @@ Point Lab_D(char letter, FILE *fp, Image &screenBuffer)
         }
         screenBuffer.amount_of_throns = screenBuffer.amount_of_throns + 1;
         screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+        thron = thron + 1;
         starting_pos_player = {.x = i * 54, .y = j * 32};
         Path_4 path{starting_pos_s};
         path.Draw(screenBuffer);
@@ -613,7 +617,7 @@ Point Lab_D(char letter, FILE *fp, Image &screenBuffer)
 Point Draw_Lab(char letter, char check, FILE *fp, Image &screenBuffer)
 {
   screenBuffer.ScreenType();
-  //std::cout << 1 << std::endl;
+
   Point starting_pos_player;
   if (check == 'A')
     starting_pos_player = Lab_A(letter, fp, screenBuffer);
@@ -662,6 +666,7 @@ void Thron_Animation(Image &screen, float time)
   {
     for (i = 0; i < screen.amount_of_throns; i++)
     {
+
       starting_pose = {screen.data_throns[i].x, screen.data_throns[i].y};
       Thorns thron{starting_pose};
       thron.Draw(screen);
@@ -760,6 +765,7 @@ int main(int argc, char **argv)
   float thron = 0;
   float zaya = 0;
   //game loop
+
   while (!glfwWindowShouldClose(window))
   {
     if (zaya >= 1)

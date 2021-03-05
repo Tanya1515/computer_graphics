@@ -20,27 +20,35 @@ void Thorns::Draw(Image &screen)
         {
             Pixel pix = blend(screen.data_save[y + 32 + x + 54], floor.GetPixel(x - coords.x, y - coords.y));
             screen.PutPixel(x, y, pix);
+            screen.PutType(x, y, 2);
 
             pix = blend(screen.data_save[y + 32 + x + 54], floor.GetPixel(x - coords.x, y - coords.y));
             screen.PutPixel(x, y + 16, pix);
+            screen.PutType(x, y + 16, 2);
 
             pix = blend(screen.data_save[y + 32 + x + 54], floor.GetPixel(x - coords.x, y - coords.y));
             screen.PutPixel(x + 16, y + 16, pix);
+            screen.PutType(x + 16, y + 16, 2);
 
             pix = blend(screen.data_save[y + 32 + x + 54], floor.GetPixel(x - coords.x, y - coords.y));
             screen.PutPixel(x + 16, y, pix);
+            screen.PutType(x + 16, y, 2);
 
             pix = blend(screen.data_save[y + 32 + x + 54], floor.GetPixel(x - coords.x, y - coords.y));
             screen.PutPixel(x + 33, y + 16, pix);
+            screen.PutType(x + 33, y + 16, 2);
 
             pix = blend(screen.data_save[y + 32 + x + 54], floor.GetPixel(x - coords.x, y - coords.y));
             screen.PutPixel(x + 33, y, pix);
+            screen.PutType(x + 33, y, 2);
 
             pix = blend(screen.data_save[y + 32 + x + 54], floor.GetPixel(x - coords.x, y - coords.y));
             screen.PutPixel(x + 50, y, pix);
+            screen.PutType(x + 50, y, 2);
 
             pix = blend(screen.data_save[y + 32 + x + 54], floor.GetPixel(x - coords.x, y - coords.y));
             screen.PutPixel(x + 50, y + 16, pix);
+            screen.PutType(x + 50, y + 16, 2);
         }
     }
 }
@@ -54,27 +62,35 @@ void Thorns_t::Draw(Image &screen)
         {
             Pixel pix = blend(screen.data_save[y + 32 + x + 54], floor.GetPixel(x - coords.x, y - coords.y));
             screen.PutPixel(x, y, pix);
+            screen.PutType(x, y, 2);
 
             pix = blend(screen.data_save[y + 32 + x + 54], floor.GetPixel(x - coords.x, y - coords.y));
             screen.PutPixel(x, y + 16, pix);
+            screen.PutType(x, y + 16, 2);
 
             pix = blend(screen.data_save[y + 32 + x + 54], floor.GetPixel(x - coords.x, y - coords.y));
             screen.PutPixel(x + 16, y + 16, pix);
+            screen.PutType(x + 16, y + 16, 2);
 
             pix = blend(screen.data_save[y + 32 + x + 54], floor.GetPixel(x - coords.x, y - coords.y));
             screen.PutPixel(x + 16, y, pix);
+            screen.PutType(x + 16, y, 2);
 
             pix = blend(screen.data_save[y + 32 + x + 54], floor.GetPixel(x - coords.x, y - coords.y));
             screen.PutPixel(x + 33, y + 16, pix);
+            screen.PutType(x + 33, y + 16, 2);
 
             pix = blend(screen.data_save[y + 32 + x + 54], floor.GetPixel(x - coords.x, y - coords.y));
             screen.PutPixel(x + 33, y, pix);
+            screen.PutType(x + 33, y, 2);
 
             pix = blend(screen.data_save[y + 32 + x + 54], floor.GetPixel(x - coords.x, y - coords.y));
             screen.PutPixel(x + 50, y, pix);
+            screen.PutType(x + 50, y, 2);
 
             pix = blend(screen.data_save[y + 32 + x + 54], floor.GetPixel(x - coords.x, y - coords.y));
             screen.PutPixel(x + 50, y + 16, pix);
+            screen.PutType(x + 50, y + 16, 2);
         }
     }
 }
@@ -88,27 +104,35 @@ void Thorns_r::Draw(Image &screen)
         {
             Pixel pix = blend(screen.data_save[y + 32 + x + 54], floor.GetPixel(x - coords.x, y - coords.y));
             screen.PutPixel(x, y, pix);
+            screen.PutType(x, y, 2);
 
             pix = blend(screen.data_save[y + 32 + x + 54], floor.GetPixel(x - coords.x, y - coords.y));
             screen.PutPixel(x, y + 16, pix);
+            screen.PutType(x, y + 16, 2);
 
             pix = blend(screen.data_save[y + 32 + x + 54], floor.GetPixel(x - coords.x, y - coords.y));
             screen.PutPixel(x + 16, y + 16, pix);
+            screen.PutType(x + 16, y + 16, 2);
 
             pix = blend(screen.data_save[y + 32 + x + 54], floor.GetPixel(x - coords.x, y - coords.y));
             screen.PutPixel(x + 16, y, pix);
+            screen.PutType(x + 16, y, 2);
 
             pix = blend(screen.data_save[y + 32 + x + 54], floor.GetPixel(x - coords.x, y - coords.y));
             screen.PutPixel(x + 33, y + 16, pix);
+            screen.PutType(x + 33, y + 16, 2);
 
             pix = blend(screen.data_save[y + 32 + x + 54], floor.GetPixel(x - coords.x, y - coords.y));
             screen.PutPixel(x + 33, y, pix);
+            screen.PutType(x + 33, y, 2);
 
             pix = blend(screen.data_save[y + 32 + x + 54], floor.GetPixel(x - coords.x, y - coords.y));
             screen.PutPixel(x + 50, y, pix);
+            screen.PutType(x + 50, y, 2);
 
             pix = blend(screen.data_save[y + 32 + x + 54], floor.GetPixel(x - coords.x, y - coords.y));
             screen.PutPixel(x + 50, y + 16, pix);
+            screen.PutType(x + 50, y + 16, 2);
         }
     }
 }
