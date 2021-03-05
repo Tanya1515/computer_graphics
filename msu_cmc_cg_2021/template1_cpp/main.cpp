@@ -87,25 +87,6 @@ void OnMouseMove(GLFWwindow *window, double xpos, double ypos)
   Input.lastY = float(ypos);
 }
 
-void Check_prev_letter(int &trap, int &thron, Image &screen, char prev_letter, int i, int j)
-{
-
-  if (prev_letter == '*')
-  {
-
-    trap = trap + 1;
-    screen.data_trap[trap] = {.x = i * 54, .y = j * 32};
-    trap = trap + 1;
-  }
-  if (prev_letter == 'T')
-  {
-
-    thron = thron + 1;
-    screen.data_throns[thron] = {.x = i * 54, .y = j * 32};
-    thron = thron + 1;
-  }
-}
-
 Point Lab_A(char letter, FILE *fp, Image &screenBuffer)
 {
   int i = 0;
@@ -113,7 +94,6 @@ Point Lab_A(char letter, FILE *fp, Image &screenBuffer)
   int trap = 0;
   char prev_letter;
   int thron = 0;
-
   Point starting_pos_player{.x = i * 54, .y = j * 32};
   Point_s starting_pos_s{.x = i * 54, .y = j * 32};
   for (int j = 0; j < 32; j++)
@@ -122,7 +102,20 @@ Point Lab_A(char letter, FILE *fp, Image &screenBuffer)
     {
       if (letter == 'T')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
         starting_pos_player = {.x = i * 54, .y = j * 32};
         Path_1 path{starting_pos_s};
@@ -130,29 +123,70 @@ Point Lab_A(char letter, FILE *fp, Image &screenBuffer)
       }
       if (letter == '.')
       {
+        if (prev_letter == '*')
+        {
 
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Path_1 path{starting_pos_s};
         path.Draw(screenBuffer);
       }
       if (letter == '#')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Wall_1 wall{starting_pos_s};
         wall.Draw(screenBuffer);
       }
       if (letter == 'x')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Door door{starting_pos_s};
         door.Draw(screenBuffer);
       }
       if (letter == '*')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
         Bush_1 bush{starting_pos_s};
@@ -160,14 +194,24 @@ Point Lab_A(char letter, FILE *fp, Image &screenBuffer)
       }
       if (letter == ' ')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         nothing no{starting_pos_s};
         no.Draw(screenBuffer);
       }
       if (letter == '@')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Path_1 path{starting_pos_s};
         path.Draw(screenBuffer);
@@ -175,7 +219,12 @@ Point Lab_A(char letter, FILE *fp, Image &screenBuffer)
       }
       if (letter == 'Q')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         end door{starting_pos_s};
         door.Draw(screenBuffer);
@@ -186,7 +235,6 @@ Point Lab_A(char letter, FILE *fp, Image &screenBuffer)
     prev_letter = letter;
     letter = fgetc(fp);
   }
-
   return starting_pos_player;
 }
 
@@ -205,36 +253,98 @@ Point Lab_B(char letter, FILE *fp, Image &screenBuffer)
     {
       if (letter == 'T')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
         starting_pos_player = {.x = i * 54, .y = j * 32};
         Path_1 path{starting_pos_s};
         path.Draw(screenBuffer);
       }
+
       if (letter == '.')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Path_2 path{starting_pos_s};
         path.Draw(screenBuffer);
       }
       if (letter == '#')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Wall_2 wall{starting_pos_s};
         wall.Draw(screenBuffer);
       }
       if (letter == 'x')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Door door{starting_pos_s};
         door.Draw(screenBuffer);
       }
       if (letter == '*')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
         Bush_2 bush{starting_pos_s};
@@ -242,14 +352,37 @@ Point Lab_B(char letter, FILE *fp, Image &screenBuffer)
       }
       if (letter == ' ')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         nothing no{starting_pos_s};
         no.Draw(screenBuffer);
       }
       if (letter == '@')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Path_2 path{starting_pos_s};
         path.Draw(screenBuffer);
@@ -257,7 +390,19 @@ Point Lab_B(char letter, FILE *fp, Image &screenBuffer)
       }
       if (letter == 'Q')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         end door{starting_pos_s};
         door.Draw(screenBuffer);
@@ -286,7 +431,20 @@ Point Lab_C(char letter, FILE *fp, Image &screenBuffer)
     {
       if (letter == 'T')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
         starting_pos_player = {.x = i * 54, .y = j * 32};
         Path_1 path{starting_pos_s};
@@ -294,21 +452,57 @@ Point Lab_C(char letter, FILE *fp, Image &screenBuffer)
       }
       if (letter == '.')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Path_3 path{starting_pos_s};
         path.Draw(screenBuffer);
       }
       if (letter == '#')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Wall_3 wall{starting_pos_s};
         wall.Draw(screenBuffer);
       }
       if (letter == '*')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
         Bush_3 bush{starting_pos_s};
@@ -316,21 +510,57 @@ Point Lab_C(char letter, FILE *fp, Image &screenBuffer)
       }
       if (letter == 'x')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Door door{starting_pos_s};
         door.Draw(screenBuffer);
       }
       if (letter == ' ')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         nothing no{starting_pos_s};
         no.Draw(screenBuffer);
       }
       if (letter == '@')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Path_3 path{starting_pos_s};
         path.Draw(screenBuffer);
@@ -338,7 +568,19 @@ Point Lab_C(char letter, FILE *fp, Image &screenBuffer)
       }
       if (letter == 'Q')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         end door{starting_pos_s};
         door.Draw(screenBuffer);
@@ -367,7 +609,20 @@ Point Lab_D(char letter, FILE *fp, Image &screenBuffer)
     {
       if (letter == 'T')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
         starting_pos_player = {.x = i * 54, .y = j * 32};
         Path_1 path{starting_pos_s};
@@ -377,27 +632,75 @@ Point Lab_D(char letter, FILE *fp, Image &screenBuffer)
       {
 
         starting_pos_s = {.x = i * 54, .y = j * 32};
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         Path_4 path{starting_pos_s};
         path.Draw(screenBuffer);
       }
       if (letter == '#')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Wall_4 wall{starting_pos_s};
         wall.Draw(screenBuffer);
       }
       if (letter == 'x')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Door door{starting_pos_s};
         door.Draw(screenBuffer);
       }
       if (letter == '*')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
 
@@ -406,14 +709,37 @@ Point Lab_D(char letter, FILE *fp, Image &screenBuffer)
       }
       if (letter == ' ')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         nothing no{starting_pos_s};
         no.Draw(screenBuffer);
       }
       if (letter == '@')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Path_4 path{starting_pos_s};
         path.Draw(screenBuffer);
@@ -421,7 +747,19 @@ Point Lab_D(char letter, FILE *fp, Image &screenBuffer)
       }
       if (letter == 'Q')
       {
-        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        if (prev_letter == '*')
+        {
+          trap = trap + 1;
+          screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+          trap = trap + 1;
+        }
+        if (prev_letter == 'T')
+        {
+
+          thron = thron + 1;
+          screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+          thron = thron + 1;
+        }
         starting_pos_s = {.x = i * 54, .y = j * 32};
         end door{starting_pos_s};
         door.Draw(screenBuffer);
@@ -439,7 +777,7 @@ Point Lab_D(char letter, FILE *fp, Image &screenBuffer)
 Point Draw_Lab(char letter, char check, FILE *fp, Image &screenBuffer)
 {
   screenBuffer.ScreenType();
-  std::cout << 1 << std::endl;
+  //std::cout << 1 << std::endl;
   Point starting_pos_player;
   if (check == 'A')
     starting_pos_player = Lab_A(letter, fp, screenBuffer);
@@ -477,21 +815,6 @@ int initGL()
   std::cout << "press ESC to exit" << std::endl;
 
   return 0;
-}
-
-void Thron_Animation(Image &screen, float time)
-{
-  int i = 0;
-  Point_s starting_pose;
-  if (time <= 2)
-  {
-    while (i <= 32 * 19)
-    {
-      starting_pose = {screen.data_trap[i].x, screen.data_trap[i].y};
-      Thorns thron{starting_pose};
-      thron.Draw(screen);
-    }
-  }
 }
 
 FILE *file_open(char *name)
@@ -544,10 +867,8 @@ int main(int argc, char **argv)
   Image screenBuffer(WINDOW_WIDTH, WINDOW_HEIGHT, 4);
   Point starting_pos_player;
   screenBuffer.ScreenType();
-
   Player player{Draw_Lab(letter, check, fp, screenBuffer)};
   fclose(fp);
-
   glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
   GL_CHECK_ERRORS;
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -555,8 +876,6 @@ int main(int argc, char **argv)
   int check_game_over = 0;
   Point_s starting_pose_game;
   float zaya = 0;
-  float thron = 0;
-  std::cout << "privet" << std::endl;
   //game loop
   while (!glfwWindowShouldClose(window))
   {
@@ -571,9 +890,7 @@ int main(int argc, char **argv)
     // команды отрисовки
 
     zaya = zaya + deltaTime;
-    thron = thron + deltaTime;
     check_game_over = processPlayerMovement(player, screenBuffer);
-    std::cout << "pizdec" << std::endl;
     if ((check_game_over == 2) || (check_game_over == 5))
     {
       starting_pose_game = {250, 400};
@@ -659,7 +976,6 @@ int main(int argc, char **argv)
     }
 
     player.Draw(screenBuffer, zaya);
-    Thron_Animation(screenBuffer, thron);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     GL_CHECK_ERRORS;
