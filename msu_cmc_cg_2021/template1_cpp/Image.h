@@ -39,6 +39,7 @@ struct Image
   int *data_obj = nullptr;
   Point_Trap *data_trap = nullptr;
   Point_Trap *data_throns = nullptr;
+  int amount_of_throns;
 
   Pixel GetPixel(int x, int y) { return data[width * y + x]; }
   void PutPixel(int x, int y, const Pixel &pix) { data[width * y + x] = pix; }
