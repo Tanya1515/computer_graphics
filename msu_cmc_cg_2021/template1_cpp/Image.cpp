@@ -33,9 +33,14 @@ Image::Image(int a_width, int a_height, int a_channels)
 void Image::ScreenType()
 {
   data_obj = new int[width * height];
-  for (int i =0; i<=width; i++)
-    for (int j =0; j<=height; j++)
-      data_obj[i,j] = 0;
+  data_trap = new Point_Trap[width * height];
+  data_throns = new Point_Trap[width * height];
+  for (int i = 0; i <= width * height; i++)
+  {
+    data_obj[i] = 0;
+    data_trap[i] = {0, 0};
+    data_throns[i] = {0, 0};
+  }
 }
 
 void Image::ScreenSave()

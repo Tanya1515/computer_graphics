@@ -12,11 +12,37 @@ static Pixel blend(Pixel oldPixel, Pixel newPixel)
   return newPixel;
 }
 
+void Draw_Trap(Image &Screen, int x, int y)
+{
+  int i = 0;
+
+  while (i < Screen.Width() * Screen.Height())
+  {
+    if ((Screen.data_trap[i].x <= x) && (Screen.data_trap[i].y <= y))
+    {
+      i = i + 1;
+
+      if ((Screen.data_trap[i].x >= x) && (Screen.data_trap[i].y + 32 >= y))
+      {
+        i = i - 1;
+
+        Point_s starting_pos_s = {Screen.data_trap[i].x, Screen.data_trap[i].y};
+        Trap_1 trap{starting_pos_s};
+        trap.Draw(Screen);
+        Screen.ScreenSave();
+        break;
+      }
+      i = i - 1;
+    }
+    i = i + 2;
+  }
+}
+
 int Checked(int x, int y, Image &screen)
 {
   if (screen.GetType(x, y) == 1) //wall
     return 1;
-  if (screen.GetType(x, y) == 2) //empty place
+  if (screen.GetType(x, y) == 2) //empty plac
     return 2;
   if (screen.GetType(x, y) == 3) //quit from labyrinth
     return 3;
@@ -36,7 +62,9 @@ bool Player::Moved() const
 // как изменяются координаты при движении вверх, вниз, вправо и влево
 int Player::ProcessInput(MovementDir dir, Image &screen)
 {
+  
   int move_dist = move_speed * 1;
+
   switch (dir)
   {
   case MovementDir::UP:
@@ -51,7 +79,10 @@ int Player::ProcessInput(MovementDir dir, Image &screen)
       if (Checked(coords.x, coords.y, screen) == 4)
         return 4;
       if (Checked(coords.x, coords.y, screen) == 5)
+      {
+        Draw_Trap(screen, coords.x, coords.y);
         return 5;
+      }
     }
     break;
   case MovementDir::DOWN:
@@ -66,7 +97,10 @@ int Player::ProcessInput(MovementDir dir, Image &screen)
       if (Checked(coords.x, coords.y, screen) == 4)
         return 4;
       if (Checked(coords.x, coords.y, screen) == 5)
+      {
+        Draw_Trap(screen, coords.x, coords.y);
         return 5;
+      }
     }
     break;
   case MovementDir::LEFT:
@@ -81,7 +115,10 @@ int Player::ProcessInput(MovementDir dir, Image &screen)
       if (Checked(coords.x, coords.y, screen) == 4)
         return 4;
       if (Checked(coords.x, coords.y, screen) == 5)
+      {
+        Draw_Trap(screen, coords.x, coords.y);
         return 5;
+      }
     }
     break;
   case MovementDir::RIGHT:
@@ -96,7 +133,10 @@ int Player::ProcessInput(MovementDir dir, Image &screen)
       if (Checked(coords.x, coords.y, screen) == 4)
         return 4;
       if (Checked(coords.x, coords.y, screen) == 5)
+      {
+        Draw_Trap(screen, coords.x, coords.y);
         return 5;
+      }
     }
     break;
   default:

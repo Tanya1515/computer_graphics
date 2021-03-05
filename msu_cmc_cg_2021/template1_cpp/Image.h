@@ -5,6 +5,12 @@
 
 constexpr int tileSize = 32;
 
+struct Point_Trap
+{
+  int x;
+  int y;
+};
+
 struct Pixel
 {
   uint8_t r;
@@ -31,7 +37,8 @@ struct Image
   void ScreenType();
   Pixel *data_save = nullptr;
   int *data_obj = nullptr;
-  
+  Point_Trap *data_trap = nullptr;
+  Point_Trap *data_throns = nullptr;
 
   Pixel GetPixel(int x, int y) { return data[width * y + x]; }
   void PutPixel(int x, int y, const Pixel &pix) { data[width * y + x] = pix; }
@@ -46,7 +53,6 @@ private:
   int channels = 3;
   size_t size = 0;
   Pixel *data = nullptr;
-  
 
   bool self_allocated = false;
 };

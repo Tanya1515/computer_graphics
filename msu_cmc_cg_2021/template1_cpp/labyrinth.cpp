@@ -11,6 +11,19 @@ static Pixel blend(Pixel oldPixel, Pixel newPixel)
     return newPixel;
 }
 
+void Thorns::Draw(Image &screen)
+{
+    static Image floor("resources/throns.png");
+    for (int y = coords.y; y <= coords.y + 16; ++y)
+    {
+        for (int x = coords.x; x <= coords.x + 16; ++x)
+        {
+            Pixel pix = blend(screen.data_save[y * screen.Width() + x], floor.GetPixel(x - coords.x, y - coords.y));
+            screen.PutPixel(x, y, pix);
+        }
+    }
+}
+
 void end::Draw(Image &screen)
 {
     static Image floor("resources/end.png");
@@ -179,8 +192,8 @@ void Path_4::Draw(Image &screen)
 void Door::Draw(Image &screen)
 {
     static Image floor("resources/doors.png");
-     int shift_y = 0;
-     int shift_x = 0;
+    int shift_y = 0;
+    int shift_x = 0;
     for (int y = coords.y; y <= coords.y + 52; ++y)
     {
         for (int x = coords.x; x <= coords.x + 32; ++x)
@@ -189,7 +202,6 @@ void Door::Draw(Image &screen)
             screen.PutPixel(coords.x + shift_x, coords.y + shift_y, pix);
             screen.PutType(coords.x + shift_x, coords.y + shift_y, 4);
             shift_y++;
-            
         }
         shift_x++;
         shift_y = 0;
@@ -198,14 +210,14 @@ void Door::Draw(Image &screen)
 
 void Trap_1::Draw(Image &screen)
 {
+
     static Image floor("resources/Obstacles.png");
     for (int y = coords.y; y <= coords.y + 32; ++y)
     {
-        for (int x = coords.x; x <= coords.x + 62; ++x)
+        for (int x = coords.x; x <= coords.x + 54; ++x)
         {
             Pixel pix = floor.GetPixel(x - coords.x + 448, y - coords.y + 350);
             screen.PutPixel(x, y, pix);
-            screen.PutType(x, y, 5);
         }
     }
 }
@@ -215,11 +227,10 @@ void Trap_2::Draw(Image &screen)
     static Image floor("resources/Obstacles.png");
     for (int y = coords.y; y <= coords.y + 32; ++y)
     {
-        for (int x = coords.x; x <= coords.x + 62; ++x)
+        for (int x = coords.x; x <= coords.x + 54; ++x)
         {
             Pixel pix = floor.GetPixel(x - coords.x + 385, y - coords.y + 250);
             screen.PutPixel(x, y, pix);
-            screen.PutType(x, y, 5);
         }
     }
 }
@@ -233,6 +244,7 @@ void Bush_1::Draw(Image &screen)
         {
             Pixel pix = floor.GetPixel(x - coords.x + 262, y - coords.y + 50);
             screen.PutPixel(x, y, pix);
+            screen.PutType(x, y, 5);
         }
     }
 }
@@ -246,6 +258,7 @@ void Bush_2::Draw(Image &screen)
         {
             Pixel pix = floor.GetPixel(x - coords.x + 262, y - coords.y + 150);
             screen.PutPixel(x, y, pix);
+            screen.PutType(x, y, 5);
         }
     }
 }
@@ -259,6 +272,7 @@ void Bush_3::Draw(Image &screen)
         {
             Pixel pix = floor.GetPixel(x - coords.x + 262, y - coords.y + 250);
             screen.PutPixel(x, y, pix);
+            screen.PutType(x, y, 5);
         }
     }
 }
@@ -272,6 +286,7 @@ void Bush_4::Draw(Image &screen)
         {
             Pixel pix = floor.GetPixel(x - coords.x + 262, y - coords.y + 345);
             screen.PutPixel(x, y, pix);
+            screen.PutType(x, y, 5);
         }
     }
 }

@@ -87,48 +87,87 @@ void OnMouseMove(GLFWwindow *window, double xpos, double ypos)
   Input.lastY = float(ypos);
 }
 
+void Check_prev_letter(int &trap, int &thron, Image &screen, char prev_letter, int i, int j)
+{
+
+  if (prev_letter == '*')
+  {
+
+    trap = trap + 1;
+    screen.data_trap[trap] = {.x = i * 54, .y = j * 32};
+    trap = trap + 1;
+  }
+  if (prev_letter == 'T')
+  {
+
+    thron = thron + 1;
+    screen.data_throns[thron] = {.x = i * 54, .y = j * 32};
+    thron = thron + 1;
+  }
+}
+
 Point Lab_A(char letter, FILE *fp, Image &screenBuffer)
 {
   int i = 0;
   int j = 0;
+  int trap = 0;
+  char prev_letter;
+  int thron = 0;
+
   Point starting_pos_player{.x = i * 54, .y = j * 32};
   Point_s starting_pos_s{.x = i * 54, .y = j * 32};
   for (int j = 0; j < 32; j++)
   {
     for (int i = 0; i < 19; i++)
     {
+      if (letter == 'T')
+      {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+        starting_pos_player = {.x = i * 54, .y = j * 32};
+        Path_1 path{starting_pos_s};
+        path.Draw(screenBuffer);
+      }
       if (letter == '.')
       {
+
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Path_1 path{starting_pos_s};
         path.Draw(screenBuffer);
       }
       if (letter == '#')
       {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Wall_1 wall{starting_pos_s};
         wall.Draw(screenBuffer);
       }
       if (letter == 'x')
       {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Door door{starting_pos_s};
         door.Draw(screenBuffer);
       }
       if (letter == '*')
       {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
+        screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
         Bush_1 bush{starting_pos_s};
         bush.Draw(screenBuffer);
       }
       if (letter == ' ')
       {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
         nothing no{starting_pos_s};
         no.Draw(screenBuffer);
       }
       if (letter == '@')
       {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Path_1 path{starting_pos_s};
         path.Draw(screenBuffer);
@@ -136,14 +175,18 @@ Point Lab_A(char letter, FILE *fp, Image &screenBuffer)
       }
       if (letter == 'Q')
       {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
         end door{starting_pos_s};
         door.Draw(screenBuffer);
       }
+      prev_letter = letter;
       letter = fgetc(fp);
     }
+    prev_letter = letter;
     letter = fgetc(fp);
   }
+
   return starting_pos_player;
 }
 
@@ -151,45 +194,62 @@ Point Lab_B(char letter, FILE *fp, Image &screenBuffer)
 {
   int i = 0;
   int j = 0;
+  char prev_letter;
+  int trap = 0;
+  int thron = 0;
   Point starting_pos_player{.x = i * 54, .y = j * 32};
   Point_s starting_pos_s{.x = i * 54, .y = j * 32};
   for (int j = 0; j < 32; j++)
   {
     for (int i = 0; i < 19; i++)
     {
-
+      if (letter == 'T')
+      {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+        starting_pos_player = {.x = i * 54, .y = j * 32};
+        Path_1 path{starting_pos_s};
+        path.Draw(screenBuffer);
+      }
       if (letter == '.')
       {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Path_2 path{starting_pos_s};
         path.Draw(screenBuffer);
       }
       if (letter == '#')
       {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Wall_2 wall{starting_pos_s};
         wall.Draw(screenBuffer);
       }
       if (letter == 'x')
       {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Door door{starting_pos_s};
         door.Draw(screenBuffer);
       }
       if (letter == '*')
       {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
+        screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
         Bush_2 bush{starting_pos_s};
         bush.Draw(screenBuffer);
       }
       if (letter == ' ')
       {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
         nothing no{starting_pos_s};
         no.Draw(screenBuffer);
       }
       if (letter == '@')
       {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Path_2 path{starting_pos_s};
         path.Draw(screenBuffer);
@@ -197,12 +257,15 @@ Point Lab_B(char letter, FILE *fp, Image &screenBuffer)
       }
       if (letter == 'Q')
       {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
         end door{starting_pos_s};
         door.Draw(screenBuffer);
       }
+      prev_letter = letter;
       letter = fgetc(fp);
     }
+    prev_letter = letter;
     letter = fgetc(fp);
   }
   return starting_pos_player;
@@ -212,44 +275,62 @@ Point Lab_C(char letter, FILE *fp, Image &screenBuffer)
 {
   int i = 0;
   int j = 0;
+  int trap = 0;
+  int thron = 0;
+  char prev_letter;
   Point starting_pos_player{.x = i * 54, .y = j * 32};
   Point_s starting_pos_s{.x = i * 54, .y = j * 32};
   for (int j = 0; j < 32; j++)
   {
     for (int i = 0; i < 19; i++)
     {
+      if (letter == 'T')
+      {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+        starting_pos_player = {.x = i * 54, .y = j * 32};
+        Path_1 path{starting_pos_s};
+        path.Draw(screenBuffer);
+      }
       if (letter == '.')
       {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Path_3 path{starting_pos_s};
         path.Draw(screenBuffer);
       }
       if (letter == '#')
       {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Wall_3 wall{starting_pos_s};
         wall.Draw(screenBuffer);
       }
       if (letter == '*')
       {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
+        screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
         Bush_3 bush{starting_pos_s};
         bush.Draw(screenBuffer);
       }
       if (letter == 'x')
       {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Door door{starting_pos_s};
         door.Draw(screenBuffer);
       }
       if (letter == ' ')
       {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
         nothing no{starting_pos_s};
         no.Draw(screenBuffer);
       }
       if (letter == '@')
       {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Path_3 path{starting_pos_s};
         path.Draw(screenBuffer);
@@ -257,12 +338,15 @@ Point Lab_C(char letter, FILE *fp, Image &screenBuffer)
       }
       if (letter == 'Q')
       {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
         end door{starting_pos_s};
         door.Draw(screenBuffer);
       }
+      prev_letter = letter;
       letter = fgetc(fp);
     }
+    prev_letter = letter;
     letter = fgetc(fp);
   }
   return starting_pos_player;
@@ -272,44 +356,64 @@ Point Lab_D(char letter, FILE *fp, Image &screenBuffer)
 {
   int i = 0;
   int j = 0;
+  int trap = 0;
+  int thron = 0;
+  char prev_letter;
   Point starting_pos_player{.x = i * 54, .y = j * 32};
   Point_s starting_pos_s{.x = i * 54, .y = j * 32};
   for (int j = 0; j < 32; j++)
   {
     for (int i = 0; i < 19; i++)
     {
+      if (letter == 'T')
+      {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
+        screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
+        starting_pos_player = {.x = i * 54, .y = j * 32};
+        Path_1 path{starting_pos_s};
+        path.Draw(screenBuffer);
+      }
       if (letter == '.')
       {
+
         starting_pos_s = {.x = i * 54, .y = j * 32};
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         Path_4 path{starting_pos_s};
         path.Draw(screenBuffer);
       }
       if (letter == '#')
       {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Wall_4 wall{starting_pos_s};
         wall.Draw(screenBuffer);
       }
       if (letter == 'x')
       {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Door door{starting_pos_s};
         door.Draw(screenBuffer);
       }
       if (letter == '*')
       {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
+        screenBuffer.data_trap[trap] = {.x = i * 54, .y = j * 32};
+
         Bush_4 bush{starting_pos_s};
         bush.Draw(screenBuffer);
       }
       if (letter == ' ')
       {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
         nothing no{starting_pos_s};
         no.Draw(screenBuffer);
       }
       if (letter == '@')
       {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
         Path_4 path{starting_pos_s};
         path.Draw(screenBuffer);
@@ -317,20 +421,25 @@ Point Lab_D(char letter, FILE *fp, Image &screenBuffer)
       }
       if (letter == 'Q')
       {
+        Check_prev_letter(trap, thron, screenBuffer, prev_letter, i, j);
         starting_pos_s = {.x = i * 54, .y = j * 32};
         end door{starting_pos_s};
         door.Draw(screenBuffer);
       }
+      prev_letter = letter;
       letter = fgetc(fp);
     }
+    prev_letter = letter;
     letter = fgetc(fp);
   }
+
   return starting_pos_player;
 }
 
 Point Draw_Lab(char letter, char check, FILE *fp, Image &screenBuffer)
 {
   screenBuffer.ScreenType();
+  std::cout << 1 << std::endl;
   Point starting_pos_player;
   if (check == 'A')
     starting_pos_player = Lab_A(letter, fp, screenBuffer);
@@ -368,6 +477,21 @@ int initGL()
   std::cout << "press ESC to exit" << std::endl;
 
   return 0;
+}
+
+void Thron_Animation(Image &screen, float time)
+{
+  int i = 0;
+  Point_s starting_pose;
+  if (time <= 2)
+  {
+    while (i <= 32 * 19)
+    {
+      starting_pose = {screen.data_trap[i].x, screen.data_trap[i].y};
+      Thorns thron{starting_pose};
+      thron.Draw(screen);
+    }
+  }
 }
 
 FILE *file_open(char *name)
@@ -420,7 +544,10 @@ int main(int argc, char **argv)
   Image screenBuffer(WINDOW_WIDTH, WINDOW_HEIGHT, 4);
   Point starting_pos_player;
   screenBuffer.ScreenType();
+
   Player player{Draw_Lab(letter, check, fp, screenBuffer)};
+  fclose(fp);
+
   glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
   GL_CHECK_ERRORS;
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -428,6 +555,8 @@ int main(int argc, char **argv)
   int check_game_over = 0;
   Point_s starting_pose_game;
   float zaya = 0;
+  float thron = 0;
+  std::cout << "privet" << std::endl;
   //game loop
   while (!glfwWindowShouldClose(window))
   {
@@ -442,7 +571,9 @@ int main(int argc, char **argv)
     // команды отрисовки
 
     zaya = zaya + deltaTime;
+    thron = thron + deltaTime;
     check_game_over = processPlayerMovement(player, screenBuffer);
+    std::cout << "pizdec" << std::endl;
     if ((check_game_over == 2) || (check_game_over == 5))
     {
       starting_pose_game = {250, 400};
@@ -467,16 +598,18 @@ int main(int argc, char **argv)
           // no.Draw(screenBuffer);
         }
       }
+
       amount_rooms = amount_rooms + 1;
       if (amount_rooms == 20)
       {
         //player.move_speed = 0;
         check = 'A';
-        FILE *fp = file_open("room5");
+        FILE *fp = file_open("final");
         letter = fgetc(fp);
         starting_pos_player = Draw_Lab(letter, check, fp, screenBuffer);
         Player player{starting_pos_player};
         player.move_speed = 4;
+        fclose(fp);
       }
       if (amount_rooms % 4 == 1)
       {
@@ -487,44 +620,46 @@ int main(int argc, char **argv)
         starting_pos_player = Draw_Lab(letter, check, fp, screenBuffer);
         Player player{starting_pos_player};
         player.move_speed = 4;
+        fclose(fp);
       }
       if (amount_rooms % 4 == 2)
       {
         //player.move_speed = 0;x
         check = 'B';
-        FILE *fp = file_open("room2");
+        FILE *fp = file_open("room3");
         letter = fgetc(fp);
         starting_pos_player = Draw_Lab(letter, check, fp, screenBuffer);
         Player player{starting_pos_player};
-
+        fclose(fp);
         player.move_speed = 4;
       }
       if (amount_rooms % 4 == 3)
       {
         //player.move_speed = 0;
         check = 'C';
-        FILE *fp = file_open("room3");
+        FILE *fp = file_open("room4");
         letter = fgetc(fp);
         starting_pos_player = Draw_Lab(letter, check, fp, screenBuffer);
         Player player{starting_pos_player};
-
+        fclose(fp);
         player.move_speed = 4;
       }
       if ((amount_rooms % 4 == 0) && (amount_rooms != 20))
       {
         //player.move_speed = 0;
         check = 'D';
-        FILE *fp = file_open("room4");
+        FILE *fp = file_open("room5");
         letter = fgetc(fp);
         starting_pos_player = Draw_Lab(letter, check, fp, screenBuffer);
 
         Player player{starting_pos_player};
-
+        fclose(fp);
         player.move_speed = 4;
       }
     }
 
     player.Draw(screenBuffer, zaya);
+    Thron_Animation(screenBuffer, thron);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     GL_CHECK_ERRORS;
@@ -540,7 +675,7 @@ int main(int argc, char **argv)
       break;
     }
   }
-  fclose(fp);
+
   glfwTerminate();
   return 0;
 }
