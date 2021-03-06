@@ -35,10 +35,12 @@ struct Image
   Pixel *Data() { return data; }
   void ScreenSave();
   void ScreenType();
+  void Screen_Save();
   Pixel *data_save = nullptr;
   int *data_obj = nullptr;
   Point_Trap *data_trap = nullptr;
   Point_Trap *data_throns = nullptr;
+  Pixel *data_save_thr = nullptr;
   int amount_of_throns;
 
   Pixel GetPixel(int x, int y) { return data[width * y + x]; }

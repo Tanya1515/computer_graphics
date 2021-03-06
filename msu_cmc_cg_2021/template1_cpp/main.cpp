@@ -113,7 +113,7 @@ Point Lab_A(char letter, FILE *fp, Image &screenBuffer)
         }
         screenBuffer.amount_of_throns = screenBuffer.amount_of_throns + 1;
         screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
-        starting_pos_player = {.x = i * 54, .y = j * 32};
+        starting_pos_s = {.x = i * 54, .y = j * 32};
         thron = thron + 1;
         Path_1 path{starting_pos_s};
         path.Draw(screenBuffer);
@@ -243,7 +243,7 @@ Point Lab_B(char letter, FILE *fp, Image &screenBuffer)
         screenBuffer.amount_of_throns = screenBuffer.amount_of_throns + 1;
         screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
         thron = thron + 1;
-        starting_pos_player = {.x = i * 54, .y = j * 32};
+        starting_pos_s = {.x = i * 54, .y = j * 32};
         Path_2 path{starting_pos_s};
         path.Draw(screenBuffer);
       }
@@ -375,7 +375,7 @@ Point Lab_C(char letter, FILE *fp, Image &screenBuffer)
         screenBuffer.amount_of_throns = screenBuffer.amount_of_throns + 1;
         screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
         thron = thron + 1;
-        starting_pos_player = {.x = i * 54, .y = j * 32};
+        starting_pos_s = {.x = i * 54, .y = j * 32};
         Path_3 path{starting_pos_s};
         path.Draw(screenBuffer);
       }
@@ -506,7 +506,7 @@ Point Lab_D(char letter, FILE *fp, Image &screenBuffer)
         screenBuffer.amount_of_throns = screenBuffer.amount_of_throns + 1;
         screenBuffer.data_throns[thron] = {.x = i * 54, .y = j * 32};
         thron = thron + 1;
-        starting_pos_player = {.x = i * 54, .y = j * 32};
+        starting_pos_s = {.x = i * 54, .y = j * 32};
         Path_4 path{starting_pos_s};
         path.Draw(screenBuffer);
       }
@@ -704,6 +704,34 @@ void Thron_Animation(Image &screen, float time)
   }
 }
 
+void Fire(Image &screen, float time)
+{
+  Point_s *starting_pose = new Point_s[4];
+  starting_pose[0] = {50, 50};
+  starting_pose[1] = {600, 600};
+  starting_pose[2] = {500, 500};
+  starting_pose[3] = {400, 300};
+  for (int i = 0; i <= 3; i++)
+  {
+    if (time <= 0.6)
+    {
+      fire_1 thron{starting_pose[i]};
+      thron.Draw(screen);
+    }
+    else if (time <= 1.2)
+    {
+
+      fire_2 thron{starting_pose[i]};
+      thron.Draw(screen);
+    }
+    else if (time <= 1.8)
+    {
+      fire_3 thron{starting_pose[i]};
+      thron.Draw(screen);
+    }
+  }
+}
+
 FILE *file_open(char *name)
 {
   FILE *fp;
@@ -754,6 +782,7 @@ int main(int argc, char **argv)
   Image screenBuffer(WINDOW_WIDTH, WINDOW_HEIGHT, 4);
   Point starting_pos_player;
   screenBuffer.ScreenType();
+
   Player player{Draw_Lab(letter, check, fp, screenBuffer)};
   fclose(fp);
   glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -764,6 +793,7 @@ int main(int argc, char **argv)
   Point_s starting_pose_game;
   float thron = 0;
   float zaya = 0;
+  float fire = 0;
   //game loop
 
   while (!glfwWindowShouldClose(window))
@@ -772,6 +802,8 @@ int main(int argc, char **argv)
       zaya = 0;
     if (thron >= 2.4)
       thron = 0;
+    if (fire >= 1.8)
+      fire = 0;
     GLfloat currentFrame = glfwGetTime();
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
@@ -782,6 +814,10 @@ int main(int argc, char **argv)
 
     zaya = zaya + deltaTime;
     thron = thron + deltaTime;
+    fire = fire + deltaTime;
+    Thron_Animation(screenBuffer, thron);
+    Fire(screenBuffer, fire);
+    screenBuffer.Screen_Save();
     check_game_over = processPlayerMovement(player, screenBuffer);
     if ((check_game_over == 2) || (check_game_over == 5))
     {
@@ -866,7 +902,6 @@ int main(int argc, char **argv)
         player.move_speed = 4;
       }
     }
-    Thron_Animation(screenBuffer, thron);
 
     player.Draw(screenBuffer, zaya);
 

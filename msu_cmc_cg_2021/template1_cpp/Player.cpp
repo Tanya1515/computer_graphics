@@ -62,7 +62,7 @@ bool Player::Moved() const
 // как изменяются координаты при движении вверх, вниз, вправо и влево
 int Player::ProcessInput(MovementDir dir, Image &screen)
 {
-  
+
   int move_dist = move_speed * 1;
 
   switch (dir)
@@ -170,17 +170,17 @@ void Player::Draw(Image &screen, float zaya)
         //screen.PutPixel(x, y, color);
         if (zaya <= 0.2)
         {
-          Pixel pix = blend(screen.data_save[y * screen.Width() + x], zaya_1.GetPixel(x - coords.x, tileSize - y + coords.y));
+          Pixel pix = blend(screen.data_save_thr[y * screen.Width() + x], zaya_1.GetPixel(x - coords.x, tileSize - y + coords.y));
           screen.PutPixel(x, y, pix);
         }
         else if (zaya <= 0.4)
         {
-          Pixel pix = blend(screen.data_save[y * screen.Width() + x], zaya_2.GetPixel(x - coords.x, tileSize - y + coords.y));
+          Pixel pix = blend(screen.data_save_thr[y * screen.Width() + x], zaya_2.GetPixel(x - coords.x, tileSize - y + coords.y));
           screen.PutPixel(x, y, pix);
         }
         else
         {
-          Pixel pix = blend(screen.data_save[y * screen.Width() + x], zaya_3.GetPixel(x - coords.x, tileSize - y + coords.y));
+          Pixel pix = blend(screen.data_save_thr[y * screen.Width() + x], zaya_3.GetPixel(x - coords.x, tileSize - y + coords.y));
           screen.PutPixel(x, y, pix);
         }
       }

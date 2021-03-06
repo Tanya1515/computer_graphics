@@ -49,6 +49,12 @@ void Image::ScreenSave()
   memcpy(data_save, data, width * height * sizeof(Pixel));
 }
 
+void Image::Screen_Save()
+{
+  data_save_thr = new Pixel[width * height];
+  memcpy(data_save_thr, data, width * height * sizeof(Pixel));
+}
+
 int Image::Save(const std::string &a_path)
 {
   auto extPos = a_path.find_last_of('.');

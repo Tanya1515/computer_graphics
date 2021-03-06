@@ -6,6 +6,38 @@ struct Point_s
     int y;
 };
 
+struct fire_1
+{
+    explicit fire_1(Point_s pos = {.x = 10, .y = 10}) : coords(pos), old_coords(coords){};
+
+    void Draw(Image &screen);
+
+private:
+    Point_s coords{.x = 0, .y = 0};
+    Point_s old_coords{.x = 15, .y = 15};
+};
+
+struct fire_2
+{
+    explicit fire_2(Point_s pos = {.x = 10, .y = 10}) : coords(pos), old_coords(coords){};
+
+    void Draw(Image &screen);
+
+private:
+    Point_s coords{.x = 0, .y = 0};
+    Point_s old_coords{.x = 15, .y = 15};
+};
+
+struct fire_3
+{
+    explicit fire_3(Point_s pos = {.x = 10, .y = 10}) : coords(pos), old_coords(coords){};
+
+    void Draw(Image &screen);
+
+private:
+    Point_s coords{.x = 0, .y = 0};
+    Point_s old_coords{.x = 15, .y = 15};
+};
 
 struct Thorns
 {
