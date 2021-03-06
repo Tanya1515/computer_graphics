@@ -74,7 +74,7 @@ int Player::ProcessInput(MovementDir dir, Image &screen)
     {
       old_coords.y = coords.y;
       coords.y += move_dist;
-      std::cout << Checked(coords.x + 10, coords.y + 16, screen) << std::endl;
+
       if (Checked(coords.x + 10, coords.y + 16, screen) == 2)
         return 2;
       if (Checked(coords.x, coords.y, screen) == 3)

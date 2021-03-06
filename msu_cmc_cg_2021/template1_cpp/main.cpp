@@ -704,10 +704,6 @@ void Thron_Animation(Image &screen, float time)
   }
 }
 
-void Fire(Image &screen, float time)
-{
-}
-
 FILE *file_open(char *name)
 {
   FILE *fp;
@@ -811,30 +807,12 @@ int main(int argc, char **argv)
 
     if ((check_game_over == 4) || (check_game_over == 6))
     {
-      double k = 1;
-      std::cout << k << std::endl;
-      while (k > 0)
-      {
-        for (int i = 0; i < 1024; i++)
-          for (int j = 0; j < 1024; j++)
-          {
-            std::cout << pix.a << std::endl;
-            pix = screenBuffer.GetPixel(i, j);
-            pix.a = pix.a * k;
-            pix.r = pix.r * k;
-            pix.g = pix.g * k;
-            pix.b = pix.b * k;
-            screenBuffer.PutPixel(i, j, pix);
-          }
-        k = k - 0.1;
-      }
       if (check_game_over == 4)
         amount_rooms = amount_rooms + 1;
       if ((check_game_over == 6) && (amount_rooms == 1))
         amount_rooms = amount_rooms + 1;
       else if ((check_game_over == 6) && (amount_rooms >= 2))
         amount_rooms = amount_rooms - 1;
-      std::cout << amount_rooms << std::endl;
       if (amount_rooms == 20)
       {
         check = 'A';
@@ -886,7 +864,7 @@ int main(int argc, char **argv)
       }
     }
     Thron_Animation(screenBuffer, thron);
-    //Fire(screenBuffer, fire,);
+
     player.Draw(screenBuffer, zaya);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

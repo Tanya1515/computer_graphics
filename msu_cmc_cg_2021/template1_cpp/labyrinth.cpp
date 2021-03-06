@@ -179,45 +179,6 @@ void Thorns_h::Draw(Image &screen)
     }
 }
 
-void fire_1::Draw(Image &screen)
-{
-    static Image floor("resources/fire.png");
-    for (int y = coords.y; y <= coords.y + 40; ++y)
-    {
-        for (int x = coords.x; x <= coords.x + 30; ++x)
-        {
-            Pixel pix = blend(screen.data_save[y + x], floor.GetPixel(x - coords.x, y - coords.y));
-            screen.PutPixel(x, 30 - y, pix);
-        }
-    }
-}
-
-void fire_2::Draw(Image &screen)
-{
-    static Image floor("resources/fire.png");
-    for (int y = coords.y; y <= coords.y + 40; ++y)
-    {
-        for (int x = coords.x; x <= coords.x + 30; ++x)
-        {
-            Pixel pix = blend(screen.data_save[y * screen.Width() + x], floor.GetPixel(30 + x - coords.x, y - coords.y));
-            screen.PutPixel(x, 30 - y, pix);
-        }
-    }
-}
-
-void fire_3::Draw(Image &screen)
-{
-    static Image floor("resources/fire.png");
-    for (int y = coords.y; y <= coords.y + 40; ++y)
-    {
-        for (int x = coords.x; x <= coords.x + 30; ++x)
-        {
-            Pixel pix = blend(screen.data_save[y * screen.Width() + x], floor.GetPixel(60 + x - coords.x, y - coords.y));
-            screen.PutPixel(x, 30 - y, pix);
-        }
-    }
-}
-
 void end::Draw(Image &screen)
 {
     static Image floor("resources/end.png");
@@ -225,6 +186,7 @@ void end::Draw(Image &screen)
     static int shift_x = 0;
     for (int y = coords.y; y <= coords.y + 52; ++y)
     {
+
         for (int x = coords.x; x <= coords.x + 32; ++x)
         {
             Pixel pix = floor.GetPixel(x - coords.x + 385, y - coords.y + 6);
@@ -276,6 +238,7 @@ void nothing::Draw(Image &screen)
         }
     }
 }
+
 
 void Path_1::Draw(Image &screen)
 {

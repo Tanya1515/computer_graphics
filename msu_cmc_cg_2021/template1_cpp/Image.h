@@ -20,6 +20,9 @@ struct Pixel
 };
 
 constexpr Pixel backgroundColor{0, 0, 0, 0};
+constexpr Pixel background_Color{60, 60, 60, 60};
+constexpr Pixel back_ground_Color{30, 30, 30, 30};
+constexpr Pixel back_ground_Color_{90, 90, 90, 90};
 
 struct Image
 {
@@ -35,7 +38,7 @@ struct Image
   Pixel *Data() { return data; }
   void ScreenSave();
   void ScreenType();
-  void Screen_Save(int i, Image &screen);
+
   Pixel *data_save = nullptr;
   int *data_obj = nullptr;
   Point_Trap *data_trap = nullptr;
