@@ -199,7 +199,7 @@ void fire_2::Draw(Image &screen)
     {
         for (int x = coords.x; x <= coords.x + 30; ++x)
         {
-            Pixel pix = blend(screen.data_save[y + x], floor.GetPixel(30 + x - coords.x, y - coords.y));
+            Pixel pix = blend(screen.data_save[y * screen.Width() + x], floor.GetPixel(30 + x - coords.x, y - coords.y));
             screen.PutPixel(x, 30 - y, pix);
         }
     }
@@ -212,7 +212,7 @@ void fire_3::Draw(Image &screen)
     {
         for (int x = coords.x; x <= coords.x + 30; ++x)
         {
-            Pixel pix = blend(screen.data_save[y + x], floor.GetPixel(60 + x - coords.x, y - coords.y));
+            Pixel pix = blend(screen.data_save[y * screen.Width() + x], floor.GetPixel(60 + x - coords.x, y - coords.y));
             screen.PutPixel(x, 30 - y, pix);
         }
     }
@@ -244,7 +244,7 @@ void win::Draw(Image &screen)
     {
         for (int x = coords.x; x <= coords.x + 440; ++x)
         {
-            Pixel pix = blend(screen.data_save_thr[y * screen.Width() + x], floor.GetPixel(x - coords.x, 280 - y + coords.y));
+            Pixel pix = blend(screen.data_save[y * screen.Width() + x], floor.GetPixel(x - coords.x, 280 - y + coords.y));
             screen.PutPixel(x, y, pix);
         }
     }
@@ -257,7 +257,7 @@ void game_over::Draw(Image &screen)
     {
         for (int x = coords.x; x <= coords.x + 552; ++x)
         {
-            Pixel pix = blend(screen.data_save_thr[y * screen.Width() + x], floor.GetPixel(x - coords.x, 273 - y + coords.y));
+            Pixel pix = blend(screen.data_save[y * screen.Width() + x], floor.GetPixel(x - coords.x, 273 - y + coords.y));
             screen.PutPixel(x, y, pix);
         }
     }
@@ -265,11 +265,13 @@ void game_over::Draw(Image &screen)
 
 void nothing::Draw(Image &screen)
 {
+    static Image floor("resources/Obstacles.png");
     for (int y = coords.y; y <= coords.y + 32; ++y)
     {
         for (int x = coords.x; x <= coords.x + 54; ++x)
         {
-            screen.PutPixel(x, y, backgroundColor);
+            Pixel pix = floor.GetPixel(x - coords.x + 385, y - coords.y + 250);
+            screen.PutPixel(x, y, pix);
             screen.PutType(x, y, 2);
         }
     }
@@ -388,13 +390,26 @@ void Door::Draw(Image &screen)
     static Image floor("resources/doors.png");
     int shift_y = 0;
     int shift_x = 0;
+    int type = 4;
+
+    if ((coords.y == 960) && (coords.x == 918))
+        type = 6;
+    if ((coords.y == 960) && (coords.x == 864))
+        type = 6;
+    if ((coords.y == 960) && (coords.x == 810))
+        type = 6;
+    if ((coords.y == 960) && (coords.x == 756))
+        type = 6;
+    if ((coords.y == 960) && (coords.x == 702))
+        type = 6;
     for (int y = coords.y; y <= coords.y + 52; ++y)
     {
         for (int x = coords.x; x <= coords.x + 32; ++x)
         {
             Pixel pix = floor.GetPixel(x - coords.x + 192, y - coords.y + 143);
             screen.PutPixel(coords.x + shift_x, coords.y + shift_y, pix);
-            screen.PutType(coords.x + shift_x, coords.y + shift_y, 4);
+
+            screen.PutType(coords.x + shift_x, coords.y + shift_y, type);
             shift_y++;
         }
         shift_x++;
@@ -411,19 +426,6 @@ void Trap_1::Draw(Image &screen)
         for (int x = coords.x; x <= coords.x + 54; ++x)
         {
             Pixel pix = floor.GetPixel(x - coords.x + 448, y - coords.y + 350);
-            screen.PutPixel(x, y, pix);
-        }
-    }
-}
-
-void Trap_2::Draw(Image &screen)
-{
-    static Image floor("resources/Obstacles.png");
-    for (int y = coords.y; y <= coords.y + 32; ++y)
-    {
-        for (int x = coords.x; x <= coords.x + 54; ++x)
-        {
-            Pixel pix = floor.GetPixel(x - coords.x + 385, y - coords.y + 250);
             screen.PutPixel(x, y, pix);
         }
     }

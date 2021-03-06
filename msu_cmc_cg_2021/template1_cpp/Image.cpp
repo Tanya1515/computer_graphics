@@ -49,10 +49,14 @@ void Image::ScreenSave()
   memcpy(data_save, data, width * height * sizeof(Pixel));
 }
 
-void Image::Screen_Save()
+void Image::Screen_Save(int i, Image &screen)
 {
   data_save_thr = new Pixel[width * height];
-  memcpy(data_save_thr, data, width * height * sizeof(Pixel));
+  memcpy(data_save_thr, data_save, width * height * sizeof(Pixel));
+  // for (int j = screen.data_throns[i].x + screen.data_throns[i].y; j <= screen.data_throns[i].x + screen.data_throns[i].y + 32 + 54; j++)
+  // {
+  //   data_save_thr[i] = data[i];
+  // }
 }
 
 int Image::Save(const std::string &a_path)

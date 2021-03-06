@@ -50,6 +50,8 @@ int Checked(int x, int y, Image &screen)
     return 4;
   if (screen.GetType(x, y) == 5) //trap
     return 5;
+  if (screen.GetType(x, y) == 6) //door back
+    return 6;
 }
 
 bool Player::Moved() const
@@ -72,6 +74,7 @@ int Player::ProcessInput(MovementDir dir, Image &screen)
     {
       old_coords.y = coords.y;
       coords.y += move_dist;
+      std::cout << Checked(coords.x + 10, coords.y + 16, screen) << std::endl;
       if (Checked(coords.x + 10, coords.y + 16, screen) == 2)
         return 2;
       if (Checked(coords.x, coords.y, screen) == 3)
@@ -83,6 +86,8 @@ int Player::ProcessInput(MovementDir dir, Image &screen)
         Draw_Trap(screen, coords.x, coords.y);
         return 5;
       }
+      if (Checked(coords.x + 10, coords.y + 16, screen) == 6)
+        return 6;
     }
     break;
   case MovementDir::DOWN:
@@ -101,6 +106,8 @@ int Player::ProcessInput(MovementDir dir, Image &screen)
         Draw_Trap(screen, coords.x, coords.y);
         return 5;
       }
+      if (Checked(coords.x + 10, coords.y + 16, screen) == 6)
+        return 6;
     }
     break;
   case MovementDir::LEFT:
@@ -119,6 +126,8 @@ int Player::ProcessInput(MovementDir dir, Image &screen)
         Draw_Trap(screen, coords.x, coords.y);
         return 5;
       }
+      if (Checked(coords.x + 10, coords.y + 16, screen) == 6)
+        return 6;
     }
     break;
   case MovementDir::RIGHT:
@@ -137,6 +146,8 @@ int Player::ProcessInput(MovementDir dir, Image &screen)
         Draw_Trap(screen, coords.x, coords.y);
         return 5;
       }
+      if (Checked(coords.x + 10, coords.y + 16, screen) == 6)
+        return 6;
     }
     break;
   default:
@@ -170,17 +181,17 @@ void Player::Draw(Image &screen, float zaya)
         //screen.PutPixel(x, y, color);
         if (zaya <= 0.2)
         {
-          Pixel pix = blend(screen.data_save_thr[y * screen.Width() + x], zaya_1.GetPixel(x - coords.x, tileSize - y + coords.y));
+          Pixel pix = blend(screen.data_save[y * screen.Width() + x], zaya_1.GetPixel(x - coords.x, tileSize - y + coords.y));
           screen.PutPixel(x, y, pix);
         }
         else if (zaya <= 0.4)
         {
-          Pixel pix = blend(screen.data_save_thr[y * screen.Width() + x], zaya_2.GetPixel(x - coords.x, tileSize - y + coords.y));
+          Pixel pix = blend(screen.data_save[y * screen.Width() + x], zaya_2.GetPixel(x - coords.x, tileSize - y + coords.y));
           screen.PutPixel(x, y, pix);
         }
         else
         {
-          Pixel pix = blend(screen.data_save_thr[y * screen.Width() + x], zaya_3.GetPixel(x - coords.x, tileSize - y + coords.y));
+          Pixel pix = blend(screen.data_save[y * screen.Width() + x], zaya_3.GetPixel(x - coords.x, tileSize - y + coords.y));
           screen.PutPixel(x, y, pix);
         }
       }

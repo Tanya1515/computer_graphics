@@ -35,7 +35,7 @@ struct Image
   Pixel *Data() { return data; }
   void ScreenSave();
   void ScreenType();
-  void Screen_Save();
+  void Screen_Save(int i, Image &screen);
   Pixel *data_save = nullptr;
   int *data_obj = nullptr;
   Point_Trap *data_trap = nullptr;

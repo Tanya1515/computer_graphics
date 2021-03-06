@@ -706,30 +706,6 @@ void Thron_Animation(Image &screen, float time)
 
 void Fire(Image &screen, float time)
 {
-  Point_s *starting_pose = new Point_s[4];
-  starting_pose[0] = {50, 50};
-  starting_pose[1] = {600, 600};
-  starting_pose[2] = {500, 500};
-  starting_pose[3] = {400, 300};
-  for (int i = 0; i <= 3; i++)
-  {
-    if (time <= 0.6)
-    {
-      fire_1 thron{starting_pose[i]};
-      thron.Draw(screen);
-    }
-    else if (time <= 1.2)
-    {
-
-      fire_2 thron{starting_pose[i]};
-      thron.Draw(screen);
-    }
-    else if (time <= 1.8)
-    {
-      fire_3 thron{starting_pose[i]};
-      thron.Draw(screen);
-    }
-  }
 }
 
 FILE *file_open(char *name)
@@ -782,7 +758,6 @@ int main(int argc, char **argv)
   Image screenBuffer(WINDOW_WIDTH, WINDOW_HEIGHT, 4);
   Point starting_pos_player;
   screenBuffer.ScreenType();
-
   Player player{Draw_Lab(letter, check, fp, screenBuffer)};
   fclose(fp);
   glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -791,10 +766,16 @@ int main(int argc, char **argv)
   GL_CHECK_ERRORS;
   int check_game_over = 0;
   Point_s starting_pose_game;
+  Pixel pix;
   float thron = 0;
   float zaya = 0;
   float fire = 0;
   //game loop
+  // Point_s *starting_pose = new Point_s[4];
+  // starting_pose[0] = {0, 0};
+  // starting_pose[1] = {19 * 54, 0};
+  // starting_pose[2] = {0, 32 * 32};
+  // starting_pose[3] = {19 * 54, 32 * 32};
 
   while (!glfwWindowShouldClose(window))
   {
@@ -802,8 +783,6 @@ int main(int argc, char **argv)
       zaya = 0;
     if (thron >= 2.4)
       thron = 0;
-    if (fire >= 1.8)
-      fire = 0;
     GLfloat currentFrame = glfwGetTime();
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
@@ -814,10 +793,7 @@ int main(int argc, char **argv)
 
     zaya = zaya + deltaTime;
     thron = thron + deltaTime;
-    fire = fire + deltaTime;
-    Thron_Animation(screenBuffer, thron);
-    Fire(screenBuffer, fire);
-    screenBuffer.Screen_Save();
+    //fire = fire + deltaTime;
     check_game_over = processPlayerMovement(player, screenBuffer);
     if ((check_game_over == 2) || (check_game_over == 5))
     {
@@ -832,22 +808,35 @@ int main(int argc, char **argv)
       win game{starting_pose_game};
       game.Draw(screenBuffer);
     }
-    if (check_game_over == 4)
-    {
-      for (int j = 0; j < 32; j++)
-      {
-        for (int i = 0; i < 19; i++)
-        {
-          // starting_pose_game = {.x = i * 54, .y = j * 32};
-          // nothing no{starting_pose_game};
-          // no.Draw(screenBuffer);
-        }
-      }
 
-      amount_rooms = amount_rooms + 1;
+    if ((check_game_over == 4) || (check_game_over == 6))
+    {
+      double k = 1;
+      std::cout << k << std::endl;
+      while (k > 0)
+      {
+        for (int i = 0; i < 1024; i++)
+          for (int j = 0; j < 1024; j++)
+          {
+            std::cout << pix.a << std::endl;
+            pix = screenBuffer.GetPixel(i, j);
+            pix.a = pix.a * k;
+            pix.r = pix.r * k;
+            pix.g = pix.g * k;
+            pix.b = pix.b * k;
+            screenBuffer.PutPixel(i, j, pix);
+          }
+        k = k - 0.1;
+      }
+      if (check_game_over == 4)
+        amount_rooms = amount_rooms + 1;
+      if ((check_game_over == 6) && (amount_rooms == 1))
+        amount_rooms = amount_rooms + 1;
+      else if ((check_game_over == 6) && (amount_rooms >= 2))
+        amount_rooms = amount_rooms - 1;
+      std::cout << amount_rooms << std::endl;
       if (amount_rooms == 20)
       {
-        //player.move_speed = 0;
         check = 'A';
         FILE *fp = file_open("final");
         letter = fgetc(fp);
@@ -858,7 +847,6 @@ int main(int argc, char **argv)
       }
       if (amount_rooms % 4 == 1)
       {
-        //player.move_speed = 0;
         check = 'A';
         FILE *fp = file_open("room1");
         letter = fgetc(fp);
@@ -869,7 +857,6 @@ int main(int argc, char **argv)
       }
       if (amount_rooms % 4 == 2)
       {
-        //player.move_speed = 0;x
         check = 'B';
         FILE *fp = file_open("room3");
         letter = fgetc(fp);
@@ -880,18 +867,15 @@ int main(int argc, char **argv)
       }
       if (amount_rooms % 4 == 3)
       {
-        //player.move_speed = 0;
         check = 'C';
         FILE *fp = file_open("room4");
         letter = fgetc(fp);
         starting_pos_player = Draw_Lab(letter, check, fp, screenBuffer);
         Player player{starting_pos_player};
         fclose(fp);
-        player.move_speed = 4;
       }
       if ((amount_rooms % 4 == 0) && (amount_rooms != 20))
       {
-        //player.move_speed = 0;
         check = 'D';
         FILE *fp = file_open("room5");
         letter = fgetc(fp);
@@ -899,10 +883,10 @@ int main(int argc, char **argv)
 
         Player player{starting_pos_player};
         fclose(fp);
-        player.move_speed = 4;
       }
     }
-
+    Thron_Animation(screenBuffer, thron);
+    //Fire(screenBuffer, fire,);
     player.Draw(screenBuffer, zaya);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
